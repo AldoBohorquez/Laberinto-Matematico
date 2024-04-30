@@ -1,0 +1,32 @@
+
+.mainContainer{
+  padding: 120px 0px;
+  background-image: url('../../../assets/images/imgInicio.png') !important;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+
+}
+
+.titulo{
+  color: white;
+  font-weight: bold;
+  font-size: 80px;
+  margin-bottom: 60px;
+}
+.cuadro2{
+  background-color: white;
+  border-radius: 30px;
+}
+
+.form-control{
+  font-size: 25px;
+  border-width: 5px;
+}
+
+.btnJugar{
+  background-color: #FFCE00;
+  font-size: 25px;
+  padding: 10px 30px;
+
+}
