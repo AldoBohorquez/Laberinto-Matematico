@@ -1,5 +1,5 @@
 .contm{
-  margin: 0px 50px;
+  padding: 10px 50px;
 }
 
 .logoText{
@@ -12,3 +12,20 @@
   font-weight: 500;
 }
 
+
+/* cambiar colores de navbar*/
+.home-page {
+  background-color: #FFFFFF; /* Cambia el color del navbar en la página de home */
+}
+
+.home-link{
+  background-color: #BBEBBD;/* Cambia el color del enlace en la página de home */
+}
+
+.login-page {
+  background-color: #BBEBBD; /* Cambia el color del navbar en la página de login y resgitro de profesor*/
+}
+
+.login-link{
+  background-color: #FFFFFF; /* Cambia el color del enlace en la página de login y registro de profesor*/
+}

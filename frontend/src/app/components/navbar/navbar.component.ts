@@ -25,10 +25,11 @@ export class NavbarComponent implements OnInit{
       if(event instanceof NavigationEnd) {
         //verifica que ruta esta activa
         this.isHomePage = event.url === '/home';
+        this.isLoginProfesorPage = (event.url === '/loginProfesor') || (event.url === '/registrarProfesor') ;
 
 
         //muestra botones
-        this.showBtnIngresar = !this.isJuegoPage;
+        this.showBtnIngresar = !this.isJuegoPage && !this.isProfesorPage;
       }
     })
   }

@@ -1,15 +1,41 @@
-<nav class="contm navbar navbar-expand-lg">
+<nav
+  class="contm navbar navbar-expand-lg"
+  [ngClass]="{ 'home-page': isHomePage, 'login-page': isLoginProfesorPage }"
+>
   <div class="container-fluid">
     <a class="navbar-brand logoText" routerLink="/home">
-      <img src="../../assets/images/logo.png" alt="Logo" width="60" height=auto class="d-inline-block align-text-center">
+      <img
+        src="../../assets/images/logo.png"
+        alt="Logo"
+        width="60"
+        height="auto"
+        class="d-inline-block align-text-center"
+      />
       Maze Coding
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active linkIngresar" routerLink="/loginProfesor" *ngIf="showBtnIngresar">Ingresar</a>
+        <a
+          class="nav-link active linkIngresar"
+          routerLink="/loginProfesor"
+          *ngIf="showBtnIngresar"
+          [ngClass]="{
+            'home-link': isHomePage,
+            'login-link': isLoginProfesorPage
+          }"
+          >Ingresar</a
+        >
       </div>
     </div>
   </div>
