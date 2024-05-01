@@ -1,15 +1,13 @@
-
 .contm{
-  margin: 0px 50px;
-}
-
+  margin: 0 !important;}
 
 .logoText{
   font-weight: bold;
+  margin-left: 20px !important;
 }
 
 .linkIngresar{
-  background-color: #BBEBBD;
   border-radius: 10px;
   font-weight: 500;
 }
+

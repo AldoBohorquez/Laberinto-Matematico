@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container contm">
+<nav class="contm navbar navbar-expand-lg" [ngStyle]="{backgroundColor: isWhite() ? '#fff' : '#BBEBBD'}">
+  <div class="container-fluid">
     <a class="navbar-brand logoText" routerLink="/home">
       <img src="../../assets/images/logo.png" alt="Logo" width="60" height=auto class="d-inline-block align-text-center">
       Maze Coding
@@ -9,7 +9,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active linkIngresar"  routerLink="/login">Ingresar</a>
+        <a class="nav-link active linkIngresar" routerLink="/loginProfesor" [ngStyle]="{backgroundColor: isWhite() ? '#BBEBBD' : '#fff'}">Ingresar</a>
       </div>
     </div>
   </div>
