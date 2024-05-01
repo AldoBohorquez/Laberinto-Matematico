@@ -9,7 +9,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active linkIngresar" routerLink="/loginProfesor" [ngStyle]="{backgroundColor: isWhite() ? '#BBEBBD' : '#fff'}">Ingresar</a>
+        <a class="nav-link active linkIngresar" routerLink="/login" *ngIf="showBtnIngresar">Ingresar</a>
       </div>
     </div>
   </div>
