@@ -1,3 +1,4 @@
+import { NivelesEntity } from "src/niveles/entity/niveles.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('ejercicios')
@@ -15,6 +16,6 @@ export class EjerciciosEntity
     @Column({type:'varchar'})
     incorrecta:string
 
-    @ManyToOne(()=>NivelesEntity,(niveles)=>niveles.ejercicios)
+    @ManyToOne(()=>NivelesEntity,(niveles)=>niveles.ejercicios,{nullable:true})
     niveles:NivelesEntity
 }
