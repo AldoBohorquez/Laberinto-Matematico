@@ -1,5 +1,6 @@
 import { ProfesoresEntity } from "src/profesores/entity/profesores.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { SalasEntity } from "src/salas/entity/salas.entity";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('grupos')
 export class GruposEntity
@@ -12,4 +13,7 @@ export class GruposEntity
 
     @ManyToOne(()=>ProfesoresEntity,(profesores)=>profesores.grupos)
     profesor:ProfesoresEntity
+
+    @OneToOne(()=>SalasEntity,(salas)=>salas.grupos)
+    salas:SalasEntity
 }
