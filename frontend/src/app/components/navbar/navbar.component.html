@@ -1,4 +1,4 @@
-<nav class="contm navbar navbar-expand-lg" [ngStyle]="{backgroundColor: isWhite() ? '#fff' : '#BBEBBD'}">
+<nav class="contm navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand logoText" routerLink="/home">
       <img src="../../assets/images/logo.png" alt="Logo" width="60" height=auto class="d-inline-block align-text-center">
@@ -9,7 +9,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active linkIngresar" routerLink="/login" *ngIf="showBtnIngresar">Ingresar</a>
+        <a class="nav-link active linkIngresar" routerLink="/loginProfesor" *ngIf="showBtnIngresar">Ingresar</a>
       </div>
     </div>
   </div>
