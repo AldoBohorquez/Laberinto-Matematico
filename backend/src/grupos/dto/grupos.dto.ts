@@ -12,5 +12,8 @@ export class GruposDto {
     alumnosId: number;
 
     @IsNumber()
-    nivelesId: number;
+    profesorId:number
+
+    @IsNumber()
+    salasId:number
 }

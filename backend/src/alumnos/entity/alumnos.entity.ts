@@ -1,5 +1,6 @@
+import { GruposEntity } from "src/grupos/entity/grupos.entity";
 import { PuntuacionesEntity } from "src/puntuaciones/entity/puntuaciones.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('alumnos')
 export class AlumnosEntity
@@ -12,4 +13,7 @@ export class AlumnosEntity
 
     @OneToMany(()=>PuntuacionesEntity,(puntuaciones)=>puntuaciones.alumnos)
     puntuaciones:PuntuacionesEntity[]
+
+    @ManyToOne(()=>GruposEntity,(grupos)=>grupos.alumnos)
+    grupos:GruposEntity
 }
