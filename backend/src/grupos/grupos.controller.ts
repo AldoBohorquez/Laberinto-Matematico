@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { GruposService } from './grupos.service';
 import { GruposDto } from './dto/grupos.dto';
 
@@ -26,5 +26,10 @@ export class GruposController {
     @Put(':id')
     actualizarGrupo(@Param('id') id:number,@Body()grupodto: GruposDto) {
         return this.service.actualizarGrupo(id,grupodto);
+    }
+
+    @Delete(':id')
+    eliminarGrupo(@Param('id') id: number) {
+        return this.service.eliminarGrupo(id);
     }
 }

@@ -37,9 +37,24 @@ export class GruposService {
 
             const profesoresFind = await this.dataSorce.getRepository(ProfesoresEntity).findOne({where:{id:bodyGrupos.profesorId}})
 
+            const salasFind = await this.dataSorce.getRepository(SalasEntity).findOne({where:{id:bodyGrupos.salasId}})
+
+            const alumnosFind = await this.dataSorce.getRepository(AlumnosEntity).findOne({where:{id:bodyGrupos.alumnosId}})
+
+            cuerpoGrupos.alumnos.push(alumnosFind)
+
+            cuerpoGrupos.salas = salasFind
+
             profesoresFind.grupos.push(cuerpoGrupos)
 
             cuerpoGrupos.profesor = profesoresFind
+
+
+            profesoresFind.grupos.push(cuerpoGrupos)
+
+            salasFind.grupos= cuerpoGrupos
+
+            alumnosFind.grupos = cuerpoGrupos
 
             await this.dataSorce.getRepository(ProfesoresEntity).save(profesoresFind)
 
