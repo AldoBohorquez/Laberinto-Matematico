@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from "class-validator"
 
-export class profesoresDto
+export class profesoreSalidaDto
 {
     @IsNumber()
     id:number
@@ -10,9 +10,6 @@ export class profesoresDto
 
     @IsString()
     usuario:string
-
-    @IsString()
-    password:string
 
     @IsNumber()
     gruposId:number

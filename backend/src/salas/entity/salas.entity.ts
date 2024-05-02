@@ -12,4 +12,10 @@ export class SalasEntity
 
     @OneToOne(()=>GruposEntity,(grupos)=>grupos.salas)
     grupos:GruposEntity
+
+    @Column({type:'date'})
+    activeDate:Date
+
+    @Column({type:'date'})
+    desactiveDate:Date
 }
