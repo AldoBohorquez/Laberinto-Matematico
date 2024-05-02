@@ -13,7 +13,7 @@ export class ProfesoresEntity
     @Column({type:'varchar',nullable:false})
     usuario:string
 
-    @Column({type:'varchar'})
+    @Column({type:'varchar', select: false})
     password:string
 
     @OneToMany(()=>GruposEntity,(grupos)=>grupos.profesor)

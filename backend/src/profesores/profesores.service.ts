@@ -12,7 +12,7 @@ export class ProfesoresService {
     async obtenerProfesores()
     {
         try {
-            return await this.dataSource.getRepository(ProfesoresEntity).find({relations: ['grupos']});
+            return await this.dataSource.getRepository(ProfesoresEntity).find({relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
         } catch (error) {
 
             throw new HttpException("Error al obtener los profesores",HttpStatus.INTERNAL_SERVER_ERROR)
@@ -23,20 +23,22 @@ export class ProfesoresService {
     async obtenerProfesor(id:number)
     {
         try {
-            return await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id},relations: ['grupos']});
+            return await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id},relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
         } catch (error) {
             throw new HttpException("Error al obtener el profesor",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    async agregarProfesor(profesorBase:profesoresDto)
-    {
+    async agregarProfesor(profesorBase: profesoresDto) {
         try {
             const nuevoProfesor = await this.dataSource.getRepository(ProfesoresEntity).create(profesorBase);
 
-            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({where:{id_grupo:profesorBase.gruposId}});
+            const encryptedPassword = await this.encryptPassword(profesorBase.password);
+            nuevoProfesor.password = encryptedPassword;
 
-            nuevoProfesor.grupos.push(gruposFind)
+            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({ where: { id_grupo: profesorBase.gruposId } });
+
+            nuevoProfesor.grupos.push(gruposFind);
 
             gruposFind.profesor = nuevoProfesor;
 
@@ -44,8 +46,14 @@ export class ProfesoresService {
 
             return await this.dataSource.getRepository(ProfesoresEntity).save(nuevoProfesor);
         } catch (error) {
-            throw new HttpException("Error al agregar el profesor",HttpStatus.INTERNAL_SERVER_ERROR)
+            throw new HttpException("Error al agregar el profesor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    async encryptPassword(password: string): Promise<string> {
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash(password, 10);
+        return hashedPassword;
     }
 
     async eliminarProfesor(id:number)
@@ -76,4 +84,24 @@ export class ProfesoresService {
         }
     }
 
+    async loginProfesor(usuario: string, password: string) {
+        try {
+            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario },relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
+
+            if (!profesorFind) {
+                throw new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+
+            const bcrypt = require('bcrypt');
+            const isPasswordValid = await bcrypt.compare(password, profesorFind.password);
+
+            if (!isPasswordValid) {
+                throw new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
+            }
+
+            return profesorFind;
+        } catch (error) {
+            throw new HttpException("Error al iniciar sesión", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
