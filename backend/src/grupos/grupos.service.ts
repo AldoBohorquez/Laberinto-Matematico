@@ -15,7 +15,7 @@ export class GruposService {
     async obtenerGrupos()
     {
         try {
-            return this.dataSorce.getRepository(GruposEntity).find({relations:['alumnos','profesores','salas']})
+            return this.dataSorce.getRepository(GruposEntity).find({relations:['alumnos','profesor','salas']})
         } catch (error) {
             throw new HttpException('Error al obtener los grupos',HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -24,7 +24,7 @@ export class GruposService {
     async obtenerGrupo(id:number)
     {
         try {
-            return this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id},relations:['alumnos','profesores','salas']})
+            return this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id},relations:['alumnos','profesor','salas']})
         } catch (error) {
             throw new HttpException('Error al obtener el grupo',HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -78,7 +78,7 @@ export class GruposService {
     {
         try {
 
-            const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id},relations:['alumnos','profesores','salas']})
+            const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id},relations:['alumnos','profesor','salas']})
 
             const profesoresFind = await this.dataSorce.getRepository(ProfesoresEntity).findOne({where:{id:bodyGrupos.profesorId}})
 

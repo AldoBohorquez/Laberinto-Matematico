@@ -1,5 +1,5 @@
 import { GruposEntity } from "src/grupos/entity/grupos.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('salas')
 export class SalasEntity
@@ -11,6 +11,7 @@ export class SalasEntity
     active:boolean
 
     @OneToOne(()=>GruposEntity,(grupos)=>grupos.salas)
+    @JoinColumn()
     grupos:GruposEntity
 
     @Column({type:'date'})

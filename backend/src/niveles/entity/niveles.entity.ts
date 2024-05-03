@@ -1,7 +1,7 @@
 import { IsNumber, IsString, isString } from "class-validator";
 import { EjerciciosEntity } from "src/ejercicios/entity/ejercicios.entity";
 import { PuntuacionesEntity } from "src/puntuaciones/entity/puntuaciones.entity";
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('niveles')
 export class NivelesEntity
@@ -17,6 +17,8 @@ export class NivelesEntity
     ejercicios:EjerciciosEntity[]
 
     @OneToOne(()=>PuntuacionesEntity,puntuaciones=>puntuaciones.niveles)
+    @JoinColumn()
     puntuaciones:PuntuacionesEntity
+    
 
 }

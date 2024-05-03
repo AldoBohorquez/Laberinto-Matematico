@@ -1,6 +1,6 @@
 import { AlumnosEntity } from "src/alumnos/entity/alumnos.entity";
 import { NivelesEntity } from "src/niveles/entity/niveles.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('puntuaciones')
 export class PuntuacionesEntity
@@ -15,6 +15,7 @@ export class PuntuacionesEntity
     alumnos:AlumnosEntity
 
     @OneToOne(()=>NivelesEntity,(niveles)=>niveles.puntuaciones)
+    @JoinColumn()
     niveles:NivelesEntity
     
 }

@@ -1,7 +1,7 @@
 import { AlumnosEntity } from "src/alumnos/entity/alumnos.entity";
 import { ProfesoresEntity } from "src/profesores/entity/profesores.entity";
 import { SalasEntity } from "src/salas/entity/salas.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('grupos')
 export class GruposEntity
@@ -16,8 +16,8 @@ export class GruposEntity
     profesor:ProfesoresEntity
 
     @OneToOne(()=>SalasEntity,(salas)=>salas.grupos)
+    @JoinColumn()
     salas:SalasEntity
-
     @OneToMany(()=>AlumnosEntity,(alumnos)=>alumnos.grupos)
     alumnos:AlumnosEntity[]
 }
