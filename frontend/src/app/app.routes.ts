@@ -4,6 +4,8 @@ import { RegistrarProfesorComponent } from './pages/registrar-profesor/registrar
 import { LoginProfesorComponent } from './pages/login-profesor/login-profesor.component';
 import { LevelComponent } from './pages/level/level.component';
 import { SectionComponent } from './pages/section/section.component';
+import { RegistrarGrupoComponent } from './pages/registrar-grupo/registrar-grupo.component';
+import { RegistrarEstudianteComponent } from './pages/registrar-estudiante/registrar-estudiante.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +27,14 @@ export const routes: Routes = [
   {
     path:'section',
     component: SectionComponent
+  },
+  {
+    path:'registrarGrupo',
+    component: RegistrarGrupoComponent
+  },
+  {
+    path:'registrarEstudiante',
+    component: RegistrarEstudianteComponent
   },
   {
     path: '**',
