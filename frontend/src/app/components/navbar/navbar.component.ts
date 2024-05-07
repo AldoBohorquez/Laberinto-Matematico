@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit{
 
   //mostrar o no, botones
   showBtnIngresar: boolean = true;
+  showBtnsProfesor: boolean = true;
 
   constructor(private router: Router) { }
 
@@ -27,15 +28,15 @@ export class NavbarComponent implements OnInit{
         this.isHomePage = event.url === '/home';
         this.isLoginProfesorPage = (event.url === '/loginProfesor') || (event.url === '/registrarProfesor') ;
         this.isJuegoPage = (event.url === '/section')|| (event.url === '/level');
+        this.isProfesorPage = (event.url === '/registrarGrupo')|| (event.url === '/registrarEstudiante')|| (event.url === '/bienvenida');
 
 
         //muestra botones
         this.showBtnIngresar = !this.isJuegoPage && !this.isProfesorPage;
+        this.showBtnsProfesor = !this.isHomePage && !this.isLoginProfesorPage && !this.isJuegoPage;
       }
     })
   }
 
-  isWhite(): boolean {
-    return this.router.url === '/home';
-  }
+  
 }

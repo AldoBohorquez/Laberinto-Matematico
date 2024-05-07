@@ -1,6 +1,10 @@
 <nav
   class="contm navbar navbar-expand-lg"
-  [ngClass]="{ 'home-page': isHomePage, 'login-page': isLoginProfesorPage }"
+  [ngClass]="{
+    'home-page': isHomePage,
+    'login-page': isLoginProfesorPage,
+    'profesor-page': isProfesorPage
+  }"
 >
   <div class="container-fluid">
     <a class="navbar-brand logoText" routerLink="/home">
@@ -35,6 +39,12 @@
             'login-link': isLoginProfesorPage
           }"
           >Ingresar</a
+        >
+        <a
+          class="nav-link active linkInicio"
+          routerLink="/bienvenida"
+          *ngIf="showBtnsProfesor"
+          >Inicio</a
         >
       </div>
     </div>

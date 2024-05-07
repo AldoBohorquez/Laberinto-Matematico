@@ -22,7 +22,7 @@
   background-color: #BBEBBD;/* Cambia el color del enlace en la página de home */
 }
 
-.login-page {
+.login-page, .profesor-page {
   background-color: #BBEBBD; /* Cambia el color del navbar en la página de login y resgitro de profesor*/
 }
 
