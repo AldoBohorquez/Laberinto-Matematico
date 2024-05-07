@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-profesor',
@@ -9,5 +9,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './login-profesor.component.css'
 })
 export class LoginProfesorComponent {
+  constructor(private router: Router) {}
+
+  onSubmit() {
+    this.router.navigate(['/bienvenida']);
+  }
 
 }
