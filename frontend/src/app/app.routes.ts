@@ -7,6 +7,7 @@ import { SectionComponent } from './pages/section/section.component';
 import { RegistrarGrupoComponent } from './pages/registrar-grupo/registrar-grupo.component';
 import { RegistrarEstudianteComponent } from './pages/registrar-estudiante/registrar-estudiante.component';
 import { PuntuacionComponent } from './pages/puntuacion/puntuacion.component';
+import { VisualizacionGrupoComponent } from './pages/visualizacion-grupo/visualizacion-grupo.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path:'puntuacion',
     component: PuntuacionComponent
+  },
+  {
+    path:'visualizacion',
+    component: VisualizacionGrupoComponent
   },
   {
     path: '**',
