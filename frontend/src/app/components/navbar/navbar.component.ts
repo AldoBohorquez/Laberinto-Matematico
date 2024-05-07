@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit{
         //verifica que ruta esta activa
         this.isHomePage = event.url === '/home';
         this.isLoginProfesorPage = (event.url === '/loginProfesor') || (event.url === '/registrarProfesor') ;
+        this.isJuegoPage = (event.url === '/section')|| (event.url === '/level');
 
 
         //muestra botones
