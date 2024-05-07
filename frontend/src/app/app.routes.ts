@@ -6,6 +6,7 @@ import { LevelComponent } from './pages/level/level.component';
 import { SectionComponent } from './pages/section/section.component';
 import { RegistrarGrupoComponent } from './pages/registrar-grupo/registrar-grupo.component';
 import { RegistrarEstudianteComponent } from './pages/registrar-estudiante/registrar-estudiante.component';
+import { PuntuacionComponent } from './pages/puntuacion/puntuacion.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
   {
     path:'registrarEstudiante',
     component: RegistrarEstudianteComponent
+  },
+  {
+    path:'puntuacion',
+    component: PuntuacionComponent
   },
   {
     path: '**',
