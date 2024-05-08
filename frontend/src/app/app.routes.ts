@@ -9,6 +9,7 @@ import { RegistrarEstudianteComponent } from './pages/registrar-estudiante/regis
 import { PuntuacionComponent } from './pages/puntuacion/puntuacion.component';
 import { VisualizacionGrupoComponent } from './pages/visualizacion-grupo/visualizacion-grupo.component';
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
+import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,10 @@ export const routes: Routes = [
   {
     path:'visualizacion',
     component: VisualizacionGrupoComponent
+  },
+  {
+    path:'crudEstudiante',
+    component: CrudEstudianteComponent
   },
   {
     path: '**',
