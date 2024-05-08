@@ -11,6 +11,7 @@ import { VisualizacionGrupoComponent } from './pages/visualizacion-grupo/visuali
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante.component';
 import { PersonajesComponent } from './pages/personajes/personajes.component';
+import { CrudGrupoComponent } from './pages/crud-grupo/crud-grupo.component';
 
 export const routes: Routes = [
   {
@@ -60,6 +61,10 @@ export const routes: Routes = [
   {
     path:'personajes',
     component: PersonajesComponent
+  },
+  {
+    path:'crudGrupo',
+    component: CrudGrupoComponent
   },
   {
     path: '**',
