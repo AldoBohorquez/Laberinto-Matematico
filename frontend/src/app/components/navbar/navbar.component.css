@@ -12,6 +12,14 @@
   font-weight: 500;
 }
 
+.linkSalir{
+  border-radius: 10px;
+  font-weight: 500;
+  background-color: white !important;
+  color: black;
+}
+
+
 
 /* cambiar colores de navbar*/
 .home-page {
@@ -29,3 +37,5 @@
 .login-link{
   background-color: #FFFFFF; /* Cambia el color del enlace en la página de login y registro de profesor*/
 }
+
+

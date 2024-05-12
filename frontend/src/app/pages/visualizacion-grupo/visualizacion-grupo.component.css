@@ -1,24 +1,24 @@
 .title {
     width: 100%;
     min-width: 200px;
-    font-size: 2.5em; 
+    font-size: 2em;
     text-align: center;
-    border: 4px dotted #000; 
-    border-radius: 5px; 
+    border: 4px dotted #000;
+    border-radius: 5px;
 }
 
 .form-check-input[type="checkbox"] {
-    width: 80px; 
-    height: 40px; 
+    width: 80px;
+    height: 40px;
 }
 
 .form-check-input[type="checkbox"]:checked {
-    background-color: #BBEBBD; 
+    background-color: #BBEBBD;
     border: none !important;
 }
 
 .form-check-input[type="checkbox"]:not(:checked) {
-    background-color: #666666; 
+    background-color: #666666;
     border: none !important;
 }
 

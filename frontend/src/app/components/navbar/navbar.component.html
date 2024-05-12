@@ -28,8 +28,8 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
+    <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+      <div class="navbar-nav gap-2 text-center">
         <a
           class="nav-link active linkIngresar"
           routerLink="/loginProfesor"
@@ -45,6 +45,23 @@
           routerLink="/bienvenida"
           *ngIf="showBtnsProfesor"
           >Inicio</a
+        >
+        <a
+          class="nav-link active linkInicio"
+          routerLink="/registrarGrupo"
+          *ngIf="showBtnsProfesor"
+          >Registrar Grupo</a
+        >
+        <a
+          class="nav-link active linkInicio"
+          routerLink="/crudGrupo"
+          *ngIf="showBtnsProfesor"
+          >Grupos</a
+        >
+        <a
+          class="nav-link active linkSalir"
+          *ngIf="showBtnsProfesor"
+          >Salir</a
         >
       </div>
     </div>
