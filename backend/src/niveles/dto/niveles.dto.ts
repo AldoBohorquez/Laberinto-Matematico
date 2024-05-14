@@ -11,6 +11,4 @@ export class nivelesDto
     @IsNumber()
     ejerciciosId:number
 
-    @IsNumber()
-    puntuacionesId:number
 }

@@ -7,16 +7,15 @@ export class SalasEntity
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({type:'boolean'})
+    @Column({type:'boolean',default:false})
     active:boolean
 
-    @OneToOne(()=>GruposEntity,(grupos)=>grupos.salas)
-    @JoinColumn()
-    grupos:GruposEntity
+    @Column({type:'integer'})
+    gruposId:number
 
-    @Column({type:'date'})
+    @Column({type:'date',nullable:true})
     activeDate:Date
 
-    @Column({type:'date'})
+    @Column({type:'date',nullable:true})
     desactiveDate:Date
 }

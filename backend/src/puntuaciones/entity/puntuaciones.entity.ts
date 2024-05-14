@@ -8,14 +8,12 @@ export class PuntuacionesEntity
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column()
+    @Column({type:'real'})
     puntuacionObtenida:number
 
-    @ManyToOne(()=>AlumnosEntity,(alumnos)=>alumnos.puntuaciones)
+    @Column({type:'varchar'})
+    nivel:string
+    @ManyToOne(()=>AlumnosEntity,(alumnos)=>alumnos.puntuaciones,{nullable:true})
     alumnos:AlumnosEntity
-
-    @OneToOne(()=>NivelesEntity,(niveles)=>niveles.puntuaciones)
-    @JoinColumn()
-    niveles:NivelesEntity
     
 }

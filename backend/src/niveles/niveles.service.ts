@@ -42,11 +42,9 @@ export class NivelesService {
 
             nuevoNivel.ejercicios.push(ejerciciosFind);
 
-            nuevoNivel.puntuaciones = puntuacionesFind;
 
             ejerciciosFind.niveles = nuevoNivel
 
-            puntuacionesFind.niveles = nuevoNivel
 
             await this.dataSource.getRepository(EjerciciosEntity).save(ejerciciosFind);
 
@@ -81,7 +79,6 @@ export class NivelesService {
             const puntuacionesFind = await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:nivelBase.puntuacionesId}});
 
             nivelActualizar.ejercicios.push(ejerciciosFind)
-            nivelActualizar.puntuaciones = puntuacionesFind;
 
             await this.dataSource.getRepository(EjerciciosEntity).save(ejerciciosFind);
 

@@ -14,6 +14,4 @@ export class profesoresDto
     @IsString()
     password:string
 
-    @IsNumber()
-    gruposId:number
 }

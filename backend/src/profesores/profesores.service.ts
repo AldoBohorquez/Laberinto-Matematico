@@ -12,7 +12,12 @@ export class ProfesoresService {
     async obtenerProfesores()
     {
         try {
-            return await this.dataSource.getRepository(ProfesoresEntity).find({relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
+            const profesores = await this.dataSource.getRepository(ProfesoresEntity).find({relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
+            if (!profesores) {
+                return new HttpException("No se encontraron profesores", HttpStatus.NOT_FOUND);
+            }
+
+            return profesores;
         } catch (error) {
 
             throw new HttpException("Error al obtener los profesores",HttpStatus.INTERNAL_SERVER_ERROR)
@@ -23,7 +28,11 @@ export class ProfesoresService {
     async obtenerProfesor(id:number)
     {
         try {
-            return await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id},relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
+            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id},relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
+            if (!profesorFind) {
+                return new HttpException("No se encontro el profesor", HttpStatus.NOT_FOUND);
+            }
+            return profesorFind;
         } catch (error) {
             throw new HttpException("Error al obtener el profesor",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -35,14 +44,6 @@ export class ProfesoresService {
 
             const encryptedPassword = await this.encryptPassword(profesorBase.password);
             nuevoProfesor.password = encryptedPassword;
-
-            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({ where: { id_grupo: profesorBase.gruposId } });
-
-            nuevoProfesor.grupos.push(gruposFind);
-
-            gruposFind.profesor = nuevoProfesor;
-
-            await this.dataSource.getRepository(GruposEntity).save(gruposFind);
 
             return await this.dataSource.getRepository(ProfesoresEntity).save(nuevoProfesor);
         } catch (error) {
@@ -59,7 +60,13 @@ export class ProfesoresService {
     async eliminarProfesor(id:number)
     {
         try {
-            return await this.dataSource.getRepository(ProfesoresEntity).delete(id);
+
+            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id}});
+            if(!profesorFind)
+            {
+                return new HttpException("No se encontro el profesor",HttpStatus.NOT_FOUND)
+            }
+            return await this.dataSource.getRepository(ProfesoresEntity).remove(profesorFind);
         } catch (error) {
             throw new HttpException("Error al eliminar el profesor",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -69,16 +76,11 @@ export class ProfesoresService {
     {
         try {
             const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({where:{id:id}});
-
-            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({where:{id_grupo:profesorBase.gruposId}});
-
-            profesorFind.grupos = [gruposFind];
-
-            gruposFind.profesor = profesorFind;
-
-            await this.dataSource.getRepository(GruposEntity).save(gruposFind);
-
-            return await this.dataSource.getRepository(ProfesoresEntity).update(profesorFind,profesorBase);
+            if(!profesorFind)
+            {
+                return new HttpException("No se encontro el profesor",HttpStatus.NOT_FOUND)
+            }
+            return await this.dataSource.getRepository(ProfesoresEntity).update({id:profesorFind.id},profesorBase);
         } catch (error) {
             throw new HttpException("Error al actualizar el profesor",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -89,14 +91,14 @@ export class ProfesoresService {
             const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario },relations: ['grupos'],select: ['id','nombreCompleto','usuario']});
 
             if (!profesorFind) {
-                throw new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
+                return new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
             }
 
             const bcrypt = require('bcrypt');
             const isPasswordValid = await bcrypt.compare(password, profesorFind.password);
 
             if (!isPasswordValid) {
-                throw new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
+                return new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
             }
 
             return profesorFind;

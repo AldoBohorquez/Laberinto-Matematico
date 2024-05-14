@@ -1,4 +1,4 @@
-import { IsNumber } from "class-validator"
+import { IsNumber, IsString } from "class-validator"
 
 export class puntuacionesDto
 {
@@ -11,6 +11,6 @@ export class puntuacionesDto
     @IsNumber()
     alumnosId:number
 
-    @IsNumber()
-    nivelesId:number
+    @IsString()
+    nivel:string
 }

@@ -12,12 +12,12 @@ export class GruposEntity
     @Column({type:'varchar'})
     nombre:string
 
-    @ManyToOne(()=>ProfesoresEntity,(profesores)=>profesores.grupos)
+    @ManyToOne(()=>ProfesoresEntity,(profesores)=>profesores.grupos,{nullable:true})
     profesor:ProfesoresEntity
 
-    @OneToOne(()=>SalasEntity,(salas)=>salas.grupos)
-    @JoinColumn()
+    @OneToOne(()=>SalasEntity,(salas)=>salas.gruposId,{onDelete:'CASCADE'})
     salas:SalasEntity
-    @OneToMany(()=>AlumnosEntity,(alumnos)=>alumnos.grupos)
+    @OneToMany(()=>AlumnosEntity,(alumnos)=>alumnos.grupos,{nullable:true})
     alumnos:AlumnosEntity[]
+    
 }

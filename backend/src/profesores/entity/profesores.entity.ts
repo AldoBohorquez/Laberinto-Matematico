@@ -16,6 +16,6 @@ export class ProfesoresEntity
     @Column({type:'varchar', select: false})
     password:string
 
-    @OneToMany(()=>GruposEntity,(grupos)=>grupos.profesor)
+    @OneToMany(()=>GruposEntity,(grupos)=>grupos.profesor,{nullable:true})
     grupos:GruposEntity[]
 }

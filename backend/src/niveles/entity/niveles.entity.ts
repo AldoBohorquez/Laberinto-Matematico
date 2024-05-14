@@ -15,10 +15,6 @@ export class NivelesEntity
 
     @OneToMany(()=>EjerciciosEntity,(ejercicios)=>ejercicios.niveles)
     ejercicios:EjerciciosEntity[]
-
-    @OneToOne(()=>PuntuacionesEntity,puntuaciones=>puntuaciones.niveles)
-    @JoinColumn()
-    puntuaciones:PuntuacionesEntity
     
 
 }

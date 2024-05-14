@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { SalasEntity } from './entity/salas.entity';
 import { GruposEntity } from 'src/grupos/entity/grupos.entity';
 import { salasDto } from './dto/salas.dto';
+import { activarSalasDto } from './dto/activarSalas.dto';
 
 @Injectable()
 export class SalasService {
@@ -13,7 +14,13 @@ export class SalasService {
     async obtenerSalas()
     {
         try {
-            return await this.dataSource.getRepository(SalasEntity).find({relations:['grupos']});
+            const salas = await this.dataSource.getRepository(SalasEntity).find()
+            if(!salas)
+            {
+                return new HttpException("No se encontraron salas",HttpStatus.NOT_FOUND)
+            }
+
+            return salas
         } catch (error) {
             throw new HttpException("Error al obtener las salas",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -22,26 +29,29 @@ export class SalasService {
     async obtenerSala(id:number)
     {
         try {
-            return await this.dataSource.getRepository(SalasEntity).findOne({where:{id:id},relations:['grupos']});
+
+            const salaFind = await this.dataSource.getRepository(SalasEntity).findOne({where:{id:id}})
+            if(!salaFind)
+            {
+                return new HttpException("No se encontro la sala",HttpStatus.NOT_FOUND)
+            }
+
+            return salaFind
         } catch (error) {
             throw new HttpException("Error al obtener la sala",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    async agregarSala(salaBase:salasDto)
+    async agregarSala(bodySala:salasDto)
     {
         try {
-            const nuevaSala = await this.dataSource.getRepository(SalasEntity).create(salaBase);
+            const sala = await this.dataSource.getRepository(SalasEntity).create(bodySala)
+            if(!sala)
+            {
+                return new HttpException("No se pudo crear la sala",HttpStatus.NOT_FOUND)
+            }
 
-            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({where:{id_grupo:salaBase.gruposId}});
-
-            nuevaSala.grupos = gruposFind;
-
-            gruposFind.salas = nuevaSala;
-
-            await this.dataSource.getRepository(GruposEntity).save(gruposFind);
-
-            return await this.dataSource.getRepository(SalasEntity).save(nuevaSala);
+            return await this.dataSource.getRepository(SalasEntity).save(sala)
         } catch (error) {
             throw new HttpException("Error al agregar la sala",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -50,27 +60,66 @@ export class SalasService {
     async eliminarSala(id:number)
     {
         try {
-            return await this.dataSource.getRepository(SalasEntity).delete(id);
+            const salaFind = await this.dataSource.getRepository(SalasEntity).findOne({where:{id:id}})
+
+            if(!salaFind)
+            {
+                return new HttpException("No se encontro la sala",HttpStatus.NOT_FOUND)
+            }
+
+            return await this.dataSource.getRepository(SalasEntity).remove(salaFind)
         } catch (error) {
-            throw new HttpException("Error al eliminar la sala",HttpStatus.INTERNAL_SERVER_ERROR)
+            
         }
     }
 
-    async actualizarSala(id:number,salaBase:salasDto)
+    async activarSala(activateS:activarSalasDto)
     {
         try {
-            const salaFind = await this.dataSource.getRepository(SalasEntity).findOne({where:{id:id}});
-            const gruposFind = await this.dataSource.getRepository(GruposEntity).findOne({where:{id_grupo:salaBase.gruposId}});
+            const salaFind = await this.dataSource.getRepository(SalasEntity).findOne({where:{id:activateS.id}})
+            if(!salaFind)
+            {
+                return new HttpException("No se encontro la sala",HttpStatus.NOT_FOUND)
+            }
 
-            salaFind.grupos = gruposFind;
+            salaFind.active = activateS.active;
+            salaFind.activeDate = new Date();
+            salaFind.desactiveDate = new Date();
+            salaFind.desactiveDate.setDate(salaFind.activeDate.getDate() + 7);
 
-            gruposFind.salas = salaFind;
-
-            await this.dataSource.getRepository(GruposEntity).save(gruposFind);
-
-            return await this.dataSource.getRepository(SalasEntity).update(salaFind,salaBase);
+            return await this.dataSource.getRepository(SalasEntity).save(salaFind);
         } catch (error) {
-            throw new HttpException("Error al actualizar la sala",HttpStatus.INTERNAL_SERVER_ERROR)
+            throw new HttpException("Error al activar la sala",HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+
+    }
+
+
+    async checadorSalas() {
+        try {
+
+            const salas = await this.dataSource.getRepository(SalasEntity).find();
+            if (!salas) {
+                return new HttpException("No se encontraron salas", HttpStatus.NOT_FOUND)
+            }
+
+            const currentDate = new Date();
+
+            for (const sala of salas) {
+                if (sala.desactiveDate && currentDate > sala.desactiveDate) {
+                    sala.active = false;
+                    sala.activeDate = null;
+                    sala.desactiveDate = null;
+                    await this.dataSource.getRepository(SalasEntity).save(sala);
+                }
+            }
+            return salas;
+        } catch (error) {
+            throw new HttpException("Error al checar las salas", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //implementar el metodo para desactivar salas que ya cumplieron su tiempo de activacion
+    //el metodo debe de ser llamado por un cron job cada 24 horas
+
 }

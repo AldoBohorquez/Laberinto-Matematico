@@ -11,9 +11,4 @@ export class salasDto {
     @IsNumber()
     gruposId:number
 
-    @IsDate()
-    activeDate:Date
-
-    @IsDate()
-    desactiveDate:Date
 }

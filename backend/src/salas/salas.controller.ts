@@ -1,11 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+} from '@nestjs/common';
 import { SalasService } from './salas.service';
 import { salasDto } from './dto/salas.dto';
+import { activarSalasDto } from './dto/activarSalas.dto';
 
 @Controller('salas')
 export class SalasController {
-
-    constructor(private service: SalasService) {}
+    constructor(private service: SalasService) { }
 
     @Get()
     obtenerSalas() {
@@ -18,13 +26,8 @@ export class SalasController {
     }
 
     @Post()
-    agregarSala(@Body() bodySalas:salasDto) {
-        return this.service.agregarSala(bodySalas);
-    }
-
-    @Put(':id')
-    actualizarSala(@Body() bodySalas,@Param('id') id: number) {
-        return this.service.actualizarSala(id, bodySalas);
+    agregarSala(@Body() bodySala: salasDto) {
+        return this.service.agregarSala(bodySala);
     }
 
     @Delete(':id')
@@ -32,4 +35,8 @@ export class SalasController {
         return this.service.eliminarSala(id);
     }
 
+    @Post('activar')
+    activarSala(@Body() activeB: activarSalasDto){
+        return this.service.activarSala(activeB);
+    }
 }

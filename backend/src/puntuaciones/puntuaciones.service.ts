@@ -16,7 +16,11 @@ export class PuntuacionesService {
     async obtenerPuntuaciones()
     {
         try {
-            return await this.dataSource.getRepository(PuntuacionesEntity).find({relations:['niveles','alumnos']});
+            const puntuaciones =  await this.dataSource.getRepository(PuntuacionesEntity).find({relations:['alumnos']});
+            if (!puntuaciones) {
+                return new HttpException("No se encontraron puntuaciones",HttpStatus.NOT_FOUND)
+            }
+            return puntuaciones;
         } catch (error) {
             throw new HttpException("Error al obtener las puntuaciones",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -25,7 +29,11 @@ export class PuntuacionesService {
     async obtenerPuntuacion(id:number)
     {
         try {
-            return await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:id},relations:['niveles','alumnos']});
+            const puntuacionFind = await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:id},relations:['alumnos']});
+            if (!puntuacionFind) {
+                return new HttpException("No se encontro la puntuacion",HttpStatus.NOT_FOUND)
+            }
+            return puntuacionFind;
         } catch (error) {
             throw new HttpException("Error al obtener la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -34,27 +42,20 @@ export class PuntuacionesService {
     async agregarPuntuacion(puntuacionBase:puntuacionesDto)
     {
         try {
-
             const nuevaPuntuacion = await this.dataSource.getRepository(PuntuacionesEntity).create(puntuacionBase);
 
-            const nivelesFind = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:puntuacionBase.nivelesId}});
+            const alumnoFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId}});
+            if (!alumnoFind) {
+                return new HttpException("No se encontro el alumno",HttpStatus.NOT_FOUND)
+            }
 
-            const alumnosFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId}});
+            const savePuntuacion = await this.dataSource.getRepository(PuntuacionesEntity).save(nuevaPuntuacion);
 
-            nuevaPuntuacion.niveles = nivelesFind;
+            alumnoFind.puntuaciones.push(savePuntuacion);
 
-            nuevaPuntuacion.alumnos = alumnosFind;
+            await this.dataSource.getRepository(AlumnosEntity).save(alumnoFind);
 
-            nivelesFind.puntuaciones = nuevaPuntuacion;
-
-            alumnosFind.puntuaciones.push(nuevaPuntuacion);
-
-            await this.dataSource.getRepository(NivelesEntity).save(nivelesFind);
-
-            await this.dataSource.getRepository(AlumnosEntity).save(alumnosFind);
-
-            return await this.dataSource.getRepository(PuntuacionesEntity).save(nuevaPuntuacion);
-
+            return savePuntuacion
         } catch (error) {
             throw new HttpException("Error al agregar la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -63,38 +64,14 @@ export class PuntuacionesService {
     async eliminarPuntuacion(id:number)
     {
         try {
-            return await this.dataSource.getRepository(PuntuacionesEntity).delete(id);
-        } catch (error) {
-
-            throw new HttpException("Error al eliminar la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
-        }
-    }
-
-    async actualizarPuntuacion(id:number,puntuacionBase:puntuacionesDto)
-    {
-        try {
             const puntuacionFind = await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:id}});
+            if (!puntuacionFind) {
+                return new HttpException("No se encontro la puntuacion",HttpStatus.NOT_FOUND)
+            }
 
-            const nivelesFind = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:puntuacionBase.nivelesId}});
-
-            const alumnosFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId}});
-
-            puntuacionFind.niveles = nivelesFind;
-
-            puntuacionFind.alumnos = alumnosFind;
-
-            nivelesFind.puntuaciones = puntuacionFind;
-
-            alumnosFind.puntuaciones.push(puntuacionFind);
-
-            await this.dataSource.getRepository(NivelesEntity).save(nivelesFind);
-
-            await this.dataSource.getRepository(AlumnosEntity).save(alumnosFind);
-
-            return await this.dataSource.getRepository(PuntuacionesEntity).update(puntuacionFind,puntuacionBase);
-
+            return await this.dataSource.getRepository(PuntuacionesEntity).remove(puntuacionFind);
         } catch (error) {
-            throw new HttpException("Error al actualizar la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
+            throw new HttpException("Error al eliminar la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 

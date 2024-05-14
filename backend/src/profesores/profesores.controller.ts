@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ProfesoresService } from './profesores.service';
 import { profesoresDto } from './dto/profesores.dto';
-import { profesoreSalidaDto } from './dto/profesoresSalida.dto';
+import { profesoreLoginDto } from './dto/profesoresSalida.dto';
 
 @Controller('profesores')
 export class ProfesoresController {
@@ -14,7 +14,7 @@ export class ProfesoresController {
     }
 
     @Post('/login')
-    login(@Body() profesorBase:profesoreSalidaDto)
+    login(@Body() profesorBase:profesoreLoginDto)
     {
         return this.service.loginProfesor(profesorBase.usuario,profesorBase.password);
     }
