@@ -13,7 +13,13 @@ export class NivelesService {
     async obtenerNiveles()
     {
         try {
-            return await this.dataSource.getRepository(NivelesEntity).find({relations: ['ejercicios', 'puntuaciones']});
+            const niveles = await this.dataSource.getRepository(NivelesEntity).find({relations: ['ejercicios']});
+
+            if (!niveles) {
+                return new HttpException("No se encontraron niveles",HttpStatus.NOT_FOUND)
+            }
+
+            return niveles;
         } catch (error) {
 
             throw new HttpException("Error al obtener los niveles",HttpStatus.INTERNAL_SERVER_ERROR)
@@ -24,35 +30,33 @@ export class NivelesService {
     async obtenerNivel(id:number)
     {
         try {
-            return await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:id},relations: ['ejercicios', 'puntuaciones']});
+            const nivelesFind = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:id},relations: ['ejercicios']});
+            if (!nivelesFind) {
+                return new HttpException("No se encontro el nivel",HttpStatus.NOT_FOUND)
+            }
+            return nivelesFind;
         } catch (error) {
             throw new HttpException("Error al obtener el nivel",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    async agregarNivel(nivelBase:nivelesDto)
+    async agregarNivel(nivelBase: nivelesDto) 
     {
         try {
             const nuevoNivel = await this.dataSource.getRepository(NivelesEntity).create(nivelBase);
 
-            const ejerciciosFind = await this.dataSource.getRepository(EjerciciosEntity).findOne({where:{id:nivelBase.ejerciciosId}});
+            const ejercicioFind = await this.dataSource.getRepository(EjerciciosEntity).findOne({where:{id:nivelBase.ejerciciosId}});
 
-            const puntuacionesFind = await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:nivelBase.puntuacionesId}});
+            if (!ejercicioFind) {
+                return new HttpException("No se encontro el ejercicio",HttpStatus.NOT_FOUND)
+            }
 
+            nuevoNivel.ejercicios.push(ejercicioFind);
 
-            nuevoNivel.ejercicios.push(ejerciciosFind);
+            const saveNivel = await this.dataSource.getRepository(NivelesEntity).save(nuevoNivel);
 
+            return saveNivel
 
-            ejerciciosFind.niveles = nuevoNivel
-
-
-            await this.dataSource.getRepository(EjerciciosEntity).save(ejerciciosFind);
-
-            await this.dataSource.getRepository(PuntuacionesEntity).save(puntuacionesFind);
-
-            return await this.dataSource.getRepository(NivelesEntity).save(nuevoNivel);
-
-            
         } catch (error) {
             throw new HttpException("Error al agregar el nivel",HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -61,32 +65,17 @@ export class NivelesService {
     async eliminarNivel(id:number)
     {
         try {
-            const nivelEliminar = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:id}});
 
-            return await this.dataSource.getRepository(NivelesEntity).delete(nivelEliminar);
+            const nivelFind = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:id}});
+
+            if (!nivelFind) {
+                return new HttpException("No se encontro el nivel",HttpStatus.NOT_FOUND)
+            }
+
+            return await this.dataSource.getRepository(NivelesEntity).remove(nivelFind);
+
         } catch (error) {
             throw new HttpException("Error al eliminar el nivel",HttpStatus.INTERNAL_SERVER_ERROR)
-        }
-    }
-
-    async actualizarNivel(id:number, nivelBase:nivelesDto)
-    {
-        try {
-            const nivelActualizar = await this.dataSource.getRepository(NivelesEntity).findOne({where:{id_niveles:id}});
-
-            const ejerciciosFind = await this.dataSource.getRepository(EjerciciosEntity).findOne({where:{id:nivelBase.ejerciciosId}});
-
-            const puntuacionesFind = await this.dataSource.getRepository(PuntuacionesEntity).findOne({where:{id:nivelBase.puntuacionesId}});
-
-            nivelActualizar.ejercicios.push(ejerciciosFind)
-
-            await this.dataSource.getRepository(EjerciciosEntity).save(ejerciciosFind);
-
-            await this.dataSource.getRepository(PuntuacionesEntity).save(puntuacionesFind);
-
-            return await this.dataSource.getRepository(NivelesEntity).update(nivelActualizar, nivelBase);
-        } catch (error) {
-            throw new HttpException("Error al actualizar el nivel",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 

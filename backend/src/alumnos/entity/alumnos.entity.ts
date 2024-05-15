@@ -11,9 +11,9 @@ export class AlumnosEntity
     @Column({type:'varchar'})
     nombre:string
 
-    @OneToMany(()=>PuntuacionesEntity,(puntuaciones)=>puntuaciones.alumnos)
+    @OneToMany(()=>PuntuacionesEntity,(puntuaciones)=>puntuaciones.alumnos,{nullable:true})
     puntuaciones:PuntuacionesEntity[]
 
-    @ManyToOne(()=>GruposEntity,(grupos)=>grupos.alumnos)
+    @ManyToOne(()=>GruposEntity,(grupos)=>grupos.alumnos,{nullable:true})
     grupos:GruposEntity
 }

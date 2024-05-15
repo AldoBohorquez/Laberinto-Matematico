@@ -31,10 +31,4 @@ export class NivelesController {
     {
         return await this.nivelesService.eliminarNivel(id);
     }
-
-    @Put(':id')
-    async actualizarNivel(@Param('id') id:number,@Body() nivelBase:nivelesDto)
-    {
-        return await this.nivelesService.actualizarNivel(id,nivelBase);
-    }
 }

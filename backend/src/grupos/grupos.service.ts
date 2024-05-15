@@ -76,4 +76,32 @@ export class GruposService {
         }
     }
 
+    async eliminarGrupo(id:number)
+    {
+        try {
+            const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id}})
+            if(!grupoFind)
+            {
+                return new HttpException('No se encontro el grupo',HttpStatus.NOT_FOUND)
+            }
+
+            return await this.dataSorce.getRepository(GruposEntity).remove(grupoFind)
+        } catch (error) {
+            throw new HttpException('Error al eliminar el grupo',HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    async actualizarGrupo(id:number,grupoBase:GruposDto)
+    {
+        const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:id}});
+        if(!grupoFind)
+        {
+            return new HttpException('No se encontro el grupo',HttpStatus.NOT_FOUND)
+        }
+
+        grupoFind.nombre = grupoBase.nombre;
+
+        
+    }
+
 }

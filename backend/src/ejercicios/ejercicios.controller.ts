@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { EjerciciosService } from './ejercicios.service';
+import { EjerciciosDto } from './dto/ejercicios.dto';
 
 @Controller('ejercicios')
 export class EjerciciosController {
@@ -17,18 +18,18 @@ export class EjerciciosController {
     }
 
     @Post()
-    agregarEjercicio(@Body() bodyEjercicios) {
-        return this.service.agregarEjercicio(bodyEjercicios);
-    }
-
-    @Put(':id')
-    actualizarEjercicio(@Body() bodyEjercicios,@Param('id') id: number) {
-        return this.service.actualizarEjercicio(id, bodyEjercicios);
+    agregarEjercicio(@Body() bodyEjercicio:EjerciciosDto) {
+        return this.service.agregarEjercicio(bodyEjercicio);
     }
 
     @Delete(':id')
     eliminarEjercicio(@Param('id') id: number) {
         return this.service.eliminarEjercicio(id);
+    }
+
+    @Put(':id')
+    actualizarEjercicio(@Param('id') id: number, @Body() bodyEjercicio:EjerciciosDto) {
+        return this.service.actualizarEjercicio(id, bodyEjercicio);
     }
 
 }

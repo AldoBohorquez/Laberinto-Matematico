@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Put, Body, Param, Delete } from '@nestjs/common';
 import { AlumnosService } from './alumnos.service';
+import { AlumnosDto } from './dto/alumnos.dto';
 
 @Controller('alumnos')
 export class AlumnosController {
@@ -17,13 +18,13 @@ export class AlumnosController {
     }
 
     @Post()
-    agregarAlumno(@Body() bodyAlumnos) {
-        return this.service.agregarAlumno(bodyAlumnos);
+    agregarAlumno(@Body() body:AlumnosDto) {
+        return this.service.agregarAlumno(body);
     }
 
     @Put(':id')
-    actualizarAlumno(@Body() bodyAlumnos,@Param('id') id: number) {
-        return this.service.actualizarAlumno(id, bodyAlumnos);
+    actualizarAlumno(@Param('id') id: number, @Body() body:AlumnosDto) {
+        return this.service.actualizarAlumno(id, body);
     }
 
     @Delete(':id')

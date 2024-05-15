@@ -2,8 +2,6 @@ import { IsBoolean, IsDate, IsNumber } from "class-validator"
 
 export class salasDto {
 
-    @IsNumber()
-    id:number
 
     @IsBoolean()
     active:boolean

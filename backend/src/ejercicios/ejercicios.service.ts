@@ -3,6 +3,7 @@ import { EjerciciosEntity } from './entity/ejercicios.entity';
 import { DataSource } from 'typeorm';
 import { EjerciciosDto } from './dto/ejercicios.dto';
 import { NivelesEntity } from 'src/niveles/entity/niveles.entity';
+import { respuestasEntity } from 'src/respuestas/entity/respuestas.entity';
 
 @Injectable()
 export class EjerciciosService {
@@ -13,7 +14,11 @@ export class EjerciciosService {
     async obtenerEjercicios()
     {
         try {
-            return this.dataSorce.getRepository(EjerciciosEntity).find({relations:['niveles']})
+            const ejercicios =await this.dataSorce.getRepository(EjerciciosEntity).find({relations:['niveles','respuesta']})
+            if (!ejercicios) {
+                return new HttpException('No se encontraron ejercicios',HttpStatus.NOT_FOUND)
+            }
+            return ejercicios
         } catch (error) {
             throw new HttpException('Error al obtener los ejercicios',HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -22,27 +27,41 @@ export class EjerciciosService {
     async obtenerEjercicio(id:number)
     {
         try {
-            return this.dataSorce.getRepository(EjerciciosEntity).findOne({where:{id:id},relations:['niveles']})
+            const ejerciciosFind =await this.dataSorce.getRepository(EjerciciosEntity).findOne({where:{id:id},relations:['niveles','respuesta']})
+            if (!ejerciciosFind) {
+                return new HttpException('No se encontro el ejercicio',HttpStatus.NOT_FOUND)
+            }
+            return ejerciciosFind
         } catch (error) {
             throw new HttpException('Error al obtener el ejercicio',HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    async agregarEjercicio(bodyEjercicios:EjerciciosDto)
+    async agregarEjercicio(ejercicioBase:EjerciciosDto)
     {
         try {
-            const baseEjercicios = await this.dataSorce.getRepository(EjerciciosEntity).create(bodyEjercicios)
+            const nuevoEjercicio = await this.dataSorce.getRepository(EjerciciosEntity).create(ejercicioBase)
+            const nivelFind = await this.dataSorce.getRepository(NivelesEntity).findOne({where:{id_niveles:ejercicioBase.nivelesId}})
+            if (!nivelFind) {
+                return new HttpException('No se encontro el nivel',HttpStatus.NOT_FOUND)
+            }
 
-            const nivelesFind = await this.dataSorce.getRepository(NivelesEntity).findOne({where:{id_niveles:bodyEjercicios.nivelesId}})
+            const respuestaFind = await this.dataSorce.getRepository(respuestasEntity).findOne({where:{id:ejercicioBase.respuestasId}})
 
+            if (!respuestaFind) {
+                return new HttpException('No se encontro la respuesta',HttpStatus.NOT_FOUND)
+            }
 
-            nivelesFind.ejercicios.push(baseEjercicios)
+            nuevoEjercicio.respuesta.push(respuestaFind)
 
-            baseEjercicios.niveles = nivelesFind
+            const ejerciciosSave = await this.dataSorce.getRepository(EjerciciosEntity).save(nuevoEjercicio)
 
-            await this.dataSorce.getRepository(NivelesEntity).save(nivelesFind)
+            nivelFind.ejercicios.push(ejerciciosSave)
 
-            return this.dataSorce.getRepository(EjerciciosEntity).save(baseEjercicios)
+            await this.dataSorce.getRepository(NivelesEntity).save(nivelFind)
+            await this.dataSorce.getRepository(respuestasEntity).save(respuestaFind)
+
+            return ejerciciosSave
         } catch (error) {
             throw new HttpException('Error al agregar el ejercicio',HttpStatus.INTERNAL_SERVER_ERROR)
         }
@@ -51,24 +70,24 @@ export class EjerciciosService {
     async eliminarEjercicio(id:number)
     {
         try {
-            return this.dataSorce.getRepository(EjerciciosEntity).delete(id)
+            const ejercicioFind = await this.dataSorce.getRepository(EjerciciosEntity).findOne({where:{id:id}})
+            if (!ejercicioFind) {
+                return new HttpException('No se encontro el ejercicio',HttpStatus.NOT_FOUND)
+            }
+            return await this.dataSorce.getRepository(EjerciciosEntity).remove(ejercicioFind)
         } catch (error) {
             throw new HttpException('Error al eliminar el ejercicio',HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
-    async actualizarEjercicio(id:number,bodyEjercicios:EjerciciosDto)
+    async actualizarEjercicio(id:number,ejercicioBase:EjerciciosDto)
     {
         try {
-            const ejercicioFind = await this.dataSorce.getRepository(EjerciciosEntity).findOne({where:{id:id},relations:['niveles']})
-
-            const nivelesFind = await this.dataSorce.getRepository(NivelesEntity).findOne({where:{id_niveles:bodyEjercicios.nivelesId}})
-
-
-            ejercicioFind.niveles = nivelesFind;
-
-            return this.dataSorce.getRepository(EjerciciosEntity).update(ejercicioFind,bodyEjercicios)
-
+            const ejercicioFind = await this.dataSorce.getRepository(EjerciciosEntity).findOne({where:{id:id}})
+            if (!ejercicioFind) {
+                return new HttpException('No se encontro el ejercicio',HttpStatus.NOT_FOUND)
+            }
+            return await this.dataSorce.getRepository(EjerciciosEntity).update({id:ejercicioFind.id},ejercicioBase)
         } catch (error) {
             throw new HttpException('Error al actualizar el ejercicio',HttpStatus.INTERNAL_SERVER_ERROR)
         }

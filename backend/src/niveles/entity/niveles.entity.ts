@@ -13,7 +13,7 @@ export class NivelesEntity
     @Column({type:'varchar'})
     name:string
 
-    @OneToMany(()=>EjerciciosEntity,(ejercicios)=>ejercicios.niveles)
+    @OneToMany(()=>EjerciciosEntity,(ejercicios)=>ejercicios.niveles,{nullable:true})
     ejercicios:EjerciciosEntity[]
     
 

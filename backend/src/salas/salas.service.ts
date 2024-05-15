@@ -69,7 +69,7 @@ export class SalasService {
 
             return await this.dataSource.getRepository(SalasEntity).remove(salaFind)
         } catch (error) {
-            
+            throw new HttpException("Error al eliminar la sala",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
