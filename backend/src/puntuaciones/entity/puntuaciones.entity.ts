@@ -13,6 +13,7 @@ export class PuntuacionesEntity
 
     @Column({type:'varchar'})
     nivel:string
+    
     @ManyToOne(()=>AlumnosEntity,(alumnos)=>alumnos.puntuaciones,{nullable:true})
     alumnos:AlumnosEntity
     

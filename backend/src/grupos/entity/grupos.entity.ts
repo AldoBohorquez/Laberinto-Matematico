@@ -16,6 +16,7 @@ export class GruposEntity
     profesor:ProfesoresEntity
 
     @OneToOne(()=>SalasEntity,(salas)=>salas.gruposId,{onDelete:'CASCADE'})
+    @JoinColumn({name:'salasId'})
     salas:SalasEntity
     @OneToMany(()=>AlumnosEntity,(alumnos)=>alumnos.grupos,{nullable:true})
     alumnos:AlumnosEntity[]

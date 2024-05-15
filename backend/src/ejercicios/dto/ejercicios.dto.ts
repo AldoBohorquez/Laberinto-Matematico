@@ -4,10 +4,7 @@ export class EjerciciosDto {
 
     @IsString()
     ejercicio: string
-
-    @IsNumber()
-    respuestasId: number
-
+    
     @IsNumber()
     nivelesId: number
 }

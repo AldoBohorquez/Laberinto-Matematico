@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { respuestasEntity } from './entity/respuestas.entity';
 import { respuestasDto } from './dto/respuestas.dto';
 import { EjerciciosEntity } from 'src/ejercicios/entity/ejercicios.entity';
+import { log } from 'console';
 
 @Injectable()
 export class RespuestasService {
@@ -41,7 +42,7 @@ export class RespuestasService {
         try {
             const respuestas = await this.datasource.getRepository(respuestasEntity).create(bodyResp);
 
-            const ejerciciosFind = await this.datasource.getRepository(EjerciciosEntity).findOne({where:{id:bodyResp.ejercicioId}});
+            const ejerciciosFind = await this.datasource.getRepository(EjerciciosEntity).findOne({where:{id:bodyResp.ejercicioId},relations:['respuesta']});
             if(!ejerciciosFind){
                 return new HttpException("No se encontro el ejercicio",HttpStatus.NOT_FOUND)
             }
@@ -54,6 +55,8 @@ export class RespuestasService {
             return saveRespuesta;
             
         } catch (error) {
+            console.log(error);
+            
             throw new HttpException("Error al agregar la respuesta",HttpStatus.INTERNAL_SERVER_ERROR)   
         }
     }

@@ -10,7 +10,7 @@ export class SalasEntity
     @Column({type:'boolean',default:false})
     active:boolean
 
-    @Column({type:'integer'})
+    @Column({type:'integer',nullable:true})
     gruposId:number
 
     @Column({type:'date',nullable:true})

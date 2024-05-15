@@ -14,6 +14,6 @@ export class AlumnosEntity
     @OneToMany(()=>PuntuacionesEntity,(puntuaciones)=>puntuaciones.alumnos,{nullable:true})
     puntuaciones:PuntuacionesEntity[]
 
-    @ManyToOne(()=>GruposEntity,(grupos)=>grupos.alumnos,{nullable:true})
+    @ManyToOne(()=>GruposEntity,(grupos)=>grupos.alumnos)
     grupos:GruposEntity
 }

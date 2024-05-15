@@ -44,7 +44,7 @@ export class PuntuacionesService {
         try {
             const nuevaPuntuacion = await this.dataSource.getRepository(PuntuacionesEntity).create(puntuacionBase);
 
-            const alumnoFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId}});
+            const alumnoFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId},relations:['puntuaciones']});
             if (!alumnoFind) {
                 return new HttpException("No se encontro el alumno",HttpStatus.NOT_FOUND)
             }
@@ -57,6 +57,8 @@ export class PuntuacionesService {
 
             return savePuntuacion
         } catch (error) {
+            console.log(error);
+            
             throw new HttpException("Error al agregar la puntuacion",HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

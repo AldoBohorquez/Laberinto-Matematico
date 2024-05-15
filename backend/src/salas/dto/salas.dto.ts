@@ -6,7 +6,5 @@ export class salasDto {
     @IsBoolean()
     active:boolean
 
-    @IsNumber()
-    gruposId:number
 
 }

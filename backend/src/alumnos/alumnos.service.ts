@@ -48,18 +48,11 @@ export class AlumnosService {
 
             const nuevoAlumno = await this.dataSorce.getRepository(AlumnosEntity).create(alumnoBase)
 
-            const puntuacionFind = await this.dataSorce.getRepository(PuntuacionesEntity).findOne({where:{id:alumnoBase.puntuacionesId}})
-            if(!puntuacionFind)
-            {
-                return new HttpException('No se encontro la puntuacion',HttpStatus.NOT_FOUND)
-            }
-            const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:alumnoBase.gruposId}})
+            const grupoFind = await this.dataSorce.getRepository(GruposEntity).findOne({where:{id_grupo:alumnoBase.gruposId},relations:['alumnos']})
             if(!grupoFind)
             {
                 return new HttpException('No se encontro el grupo',HttpStatus.NOT_FOUND)
             }
-
-            nuevoAlumno.puntuaciones.push(puntuacionFind)
 
             const saveAlumno = await this.dataSorce.getRepository(AlumnosEntity).save(nuevoAlumno)
 
@@ -69,6 +62,8 @@ export class AlumnosService {
 
             return saveAlumno
         } catch (error) {
+            console.log(error);
+            
             throw new HttpException('Error al agregar el alumno',HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

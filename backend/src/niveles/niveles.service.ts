@@ -45,14 +45,6 @@ export class NivelesService {
         try {
             const nuevoNivel = await this.dataSource.getRepository(NivelesEntity).create(nivelBase);
 
-            const ejercicioFind = await this.dataSource.getRepository(EjerciciosEntity).findOne({where:{id:nivelBase.ejerciciosId}});
-
-            if (!ejercicioFind) {
-                return new HttpException("No se encontro el ejercicio",HttpStatus.NOT_FOUND)
-            }
-
-            nuevoNivel.ejercicios.push(ejercicioFind);
-
             const saveNivel = await this.dataSource.getRepository(NivelesEntity).save(nuevoNivel);
 
             return saveNivel

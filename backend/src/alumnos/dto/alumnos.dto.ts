@@ -6,6 +6,5 @@ export class AlumnosDto {
     nombre:string
 
     @IsNumber()
-    puntuacionesId:number
     gruposId: any;
 }

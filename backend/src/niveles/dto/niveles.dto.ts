@@ -6,7 +6,4 @@ export class nivelesDto
     @IsString()
     name:string
 
-    @IsNumber()
-    ejerciciosId:number
-
 }

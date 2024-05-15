@@ -41,28 +41,22 @@ export class EjerciciosService {
     {
         try {
             const nuevoEjercicio = await this.dataSorce.getRepository(EjerciciosEntity).create(ejercicioBase)
-            const nivelFind = await this.dataSorce.getRepository(NivelesEntity).findOne({where:{id_niveles:ejercicioBase.nivelesId}})
+            const nivelFind = await this.dataSorce.getRepository(NivelesEntity).findOne({where:{id_niveles:ejercicioBase.nivelesId},relations:['ejercicios']})
             if (!nivelFind) {
                 return new HttpException('No se encontro el nivel',HttpStatus.NOT_FOUND)
             }
 
-            const respuestaFind = await this.dataSorce.getRepository(respuestasEntity).findOne({where:{id:ejercicioBase.respuestasId}})
-
-            if (!respuestaFind) {
-                return new HttpException('No se encontro la respuesta',HttpStatus.NOT_FOUND)
-            }
-
-            nuevoEjercicio.respuesta.push(respuestaFind)
 
             const ejerciciosSave = await this.dataSorce.getRepository(EjerciciosEntity).save(nuevoEjercicio)
 
             nivelFind.ejercicios.push(ejerciciosSave)
 
             await this.dataSorce.getRepository(NivelesEntity).save(nivelFind)
-            await this.dataSorce.getRepository(respuestasEntity).save(respuestaFind)
 
             return ejerciciosSave
         } catch (error) {
+            console.log(error);
+            
             throw new HttpException('Error al agregar el ejercicio',HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

@@ -6,9 +6,6 @@ export class GruposDto {
     nombre: string;
 
     @IsNumber()
-    alumnosId: number;
-
-    @IsNumber()
     profesorId:number
 
     @IsNumber()
