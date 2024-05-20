@@ -88,25 +88,24 @@ export class ProfesoresService {
 
     async loginProfesor(usuario: string, password: string) {
         try {
-            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario },relations: ['grupos'],select: ['id','nombreCompleto','usuario','password']});
-
+            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario }, relations: ['grupos'], select: ['id', 'nombreCompleto', 'usuario', 'password'] });
+    
             if (!profesorFind) {
-                return new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
+                throw new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
             }
-
+    
             const bcrypt = require('bcrypt');
             const isPasswordValid = await bcrypt.compare(password, profesorFind.password);
-
+    
             if (!isPasswordValid) {
-                new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
-                return false;
+                throw new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
             }
-
-            return true;
+    
+            // Si la contraseña es válida, devolver la información completa del usuario
+            return profesorFind;
         } catch (error) {
-            console.log(error);
-            
             throw new HttpException("Error al iniciar sesión", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 }

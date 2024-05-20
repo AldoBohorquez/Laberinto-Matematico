@@ -28,7 +28,7 @@ export class RegistrarProfesorComponent {
       toast: true,
       position: 'top',
       showConfirmButton: false,
-      timer: 1500,
+      timer: 2000,
     });
   }
 
@@ -49,7 +49,7 @@ export class RegistrarProfesorComponent {
     this.apiS.nuevoProfesor(this.formProduct.value).subscribe((data) => {
       console.log(data);
       this.formProduct.reset();
-      this.route.navigateByUrl('/login');
+      this.route.navigateByUrl('/loginProfesor');
       this.alert('Información de usuario guardada exitosamente', 'success');
     });
   }

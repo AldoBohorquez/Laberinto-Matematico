@@ -20,4 +20,8 @@ export class ApiService {
     return this._http.post<Profesor>('http://localhost:3000/profesores', profe,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
+  loginProfesor(profe: Profesor) {
+    return this._http.post('http://localhost:3000/profesores/login', profe,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
 }

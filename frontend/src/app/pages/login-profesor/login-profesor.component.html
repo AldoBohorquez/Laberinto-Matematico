@@ -1,13 +1,13 @@
 <div class="card text-center;">
     <div class="card-body">
-      <form (submit)="onSubmit()">
+      <form [formGroup]="formProduct" (ngSubmit)="logueado()">
         <div class="mb-3">
-            <label for="exampleFormControlInput2" class="form-label mt-4">Usuario:</label>
-            <input type="text" class="form-control" id="exampleFormControlInput2" required>
+            <label for="" class="form-label mt-4">Usuario:</label>
+            <input type="text" class="form-control" formControlName="usuario" required>
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlInput3" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" id="exampleFormControlInput3" required>
+            <label for="" class="form-label">Contraseña:</label>
+            <input type="password" class="form-control" formControlName="password" required>
         </div>
         <button type="submit" class="btn btn-secondary form-label mt-5">Ingresar</button>
         <span class="legend">¿No tiene una cuenta? <a routerLink="/registrarProfesor">Registre aquí</a></span>
