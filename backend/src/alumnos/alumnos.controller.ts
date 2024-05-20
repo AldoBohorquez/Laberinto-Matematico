@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Body, Param, Delete } from '@nestjs/common';
 import { AlumnosService } from './alumnos.service';
 import { AlumnosDto } from './dto/alumnos.dto';
+import { AlumnosLoginDto } from './dto/alumnosLogin.dto';
 
 @Controller('alumnos')
 export class AlumnosController {
@@ -17,9 +18,19 @@ export class AlumnosController {
         return this.service.obtenerAlumno(id);
     }
 
+    @Get('puntuaciones/alumno/:id')
+    obtenerPuntuacionesAlumno(@Param('id') id: number) {
+        return this.service.obtenerPuntuacionesAlumno(id);
+    }
+
     @Post()
     agregarAlumno(@Body() body:AlumnosDto) {
         return this.service.agregarAlumno(body);
+    }
+
+    @Post('login')
+    loginAlumno(@Body() body:AlumnosLoginDto) {
+        return this.service.loginAlumno(body);
     }
 
     @Put(':id')

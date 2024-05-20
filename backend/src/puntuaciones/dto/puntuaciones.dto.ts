@@ -7,6 +7,9 @@ export class puntuacionesDto
     puntuacionObtenida:number
 
     @IsNumber()
+    grupoId:number
+
+    @IsNumber()
     alumnosId:number
 
     @IsString()

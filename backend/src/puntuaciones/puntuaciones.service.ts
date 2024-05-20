@@ -4,6 +4,7 @@ import { PuntuacionesEntity } from './entity/puntuaciones.entity';
 import { puntuacionesDto } from './dto/puntuaciones.dto';
 import { NivelesEntity } from 'src/niveles/entity/niveles.entity';
 import { AlumnosEntity } from 'src/alumnos/entity/alumnos.entity';
+import { GruposEntity } from 'src/grupos/entity/grupos.entity';
 
 @Injectable()
 export class PuntuacionesService {
@@ -44,7 +45,13 @@ export class PuntuacionesService {
         try {
             const nuevaPuntuacion = await this.dataSource.getRepository(PuntuacionesEntity).create(puntuacionBase);
 
-            const alumnoFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId},relations:['puntuaciones']});
+            const findGrupo = await this.dataSource.getRepository(GruposEntity).findOne({where:{id_grupo:puntuacionBase.grupoId}});
+
+            if (!findGrupo) {
+                return new HttpException("No se encontro el grupo",HttpStatus.NOT_FOUND)
+            }
+
+            const alumnoFind = await this.dataSource.getRepository(AlumnosEntity).findOne({where:{id:puntuacionBase.alumnosId,grupos:{id_grupo:puntuacionBase.grupoId}},relations:['puntuaciones']});
             if (!alumnoFind) {
                 return new HttpException("No se encontro el alumno",HttpStatus.NOT_FOUND)
             }
