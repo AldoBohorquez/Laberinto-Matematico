@@ -98,10 +98,11 @@ export class ProfesoresService {
             const isPasswordValid = await bcrypt.compare(password, profesorFind.password);
 
             if (!isPasswordValid) {
-                return new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
+                new HttpException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
+                return false;
             }
 
-            return profesorFind;
+            return true;
         } catch (error) {
             throw new HttpException("Error al iniciar sesión", HttpStatus.INTERNAL_SERVER_ERROR);
         }
