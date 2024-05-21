@@ -3,6 +3,7 @@ import { RouterModule, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AutenticacionService } from '../../services/autenticacion.service';
 
 @Component({
   selector: 'app-login-profesor',
@@ -18,6 +19,7 @@ export class LoginProfesorComponent {
   fb = inject(FormBuilder);
   route = inject(Router);
   apiS = inject(ApiService);
+  authService = inject(AutenticacionService);
   formProduct!: FormGroup;
 
   alert(
@@ -46,6 +48,7 @@ export class LoginProfesorComponent {
     if (this.formProduct.valid) {
       this.apiS.loginProfesor(this.formProduct.value).subscribe(
         (response) => {
+          this.authService.login();
           this.route.navigateByUrl('/bienvenida');
           console.log('Login exitoso', response);
 

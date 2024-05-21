@@ -1,10 +1,17 @@
+
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
+import { routes } from './app.routes';
+import { AutenticacionService } from './services/autenticacion.service';
+import { authGuard } from './auth.guard';
+
 export const appConfig: ApplicationConfig = {
-  
-  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule),provideHttpClient()]
+  providers: [
+    provideRouter(routes),
+    importProvidersFrom(HttpClientModule),
+    provideHttpClient(),
+    AutenticacionService
+  ]
 };

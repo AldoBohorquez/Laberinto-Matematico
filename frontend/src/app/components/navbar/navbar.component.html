@@ -28,7 +28,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav gap-2 text-center">
         <a
           class="nav-link active linkIngresar"
@@ -60,7 +60,8 @@
         >
         <a
           class="nav-link active linkSalir"
-          *ngIf="showBtnsProfesor"
+          *ngIf="authService.isLoggedInSync()"
+          (click)="logout()"
           >Salir</a
         >
       </div>

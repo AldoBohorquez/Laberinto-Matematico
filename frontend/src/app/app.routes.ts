@@ -12,6 +12,7 @@ import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante.component';
 import { PersonajesComponent } from './pages/personajes/personajes.component';
 import { CrudGrupoComponent } from './pages/crud-grupo/crud-grupo.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -48,7 +49,8 @@ export const routes: Routes = [
   },
   {
     path:'bienvenida',
-    component: BienvenidaComponent
+    component: BienvenidaComponent,
+    canActivate: [authGuard]
   },
   {
     path:'visualizacion',

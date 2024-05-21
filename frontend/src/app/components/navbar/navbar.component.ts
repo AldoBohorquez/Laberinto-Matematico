@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { AutenticacionService } from '../../services/autenticacion.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,9 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
+
+  authService=inject(AutenticacionService);
+
   isLoginProfesorPage: boolean = false;
   isHomePage: boolean = false;
   isJuegoPage: boolean = false;
@@ -18,6 +22,11 @@ export class NavbarComponent implements OnInit {
   //mostrar o no, botones
   showBtnIngresar: boolean = true;
   showBtnsProfesor: boolean = true;
+
+  logout() {
+    this.authService.logout();
+  }
+
 
   constructor(private router: Router) {}
 
