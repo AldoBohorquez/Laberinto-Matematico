@@ -8,6 +8,4 @@ export class GruposDto {
     @IsNumber()
     profesorId:number
 
-    @IsNumber()
-    salasId:number
 }

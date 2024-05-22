@@ -51,13 +51,12 @@ export class GruposService {
                 return new HttpException('No se encontro el profesor',HttpStatus.NOT_FOUND)
             }
 
-            const salaFind = await this.dataSorce.getRepository(SalasEntity).findOne({where:{id:grupoBase.salasId}})
-            if(!salaFind)
-            {
-                return new HttpException('No se encontro la sala',HttpStatus.NOT_FOUND)
-            }
+            const sala = await this.dataSorce.getRepository(SalasEntity).create({active:false})
 
-            nuevoGrupo.salas = salaFind
+            await this.dataSorce.getRepository(SalasEntity).save(sala)
+
+
+            nuevoGrupo.salas = sala
 
             const saveGrupo = await this.dataSorce.getRepository(GruposEntity).save(nuevoGrupo)
 
@@ -65,9 +64,9 @@ export class GruposService {
 
             await this.dataSorce.getRepository(ProfesoresEntity).save(profesorFind)
 
-            salaFind.gruposId = saveGrupo.id_grupo
+            sala.gruposId = saveGrupo.id_grupo
 
-            await this.dataSorce.getRepository(SalasEntity).save(salaFind)
+            await this.dataSorce.getRepository(SalasEntity).save(sala)
 
             return saveGrupo
 
