@@ -12,6 +12,11 @@ export class GruposController {
         return this.service.obtenerGrupos();
     }
 
+    @Get('profesor/:id')
+    getGruposByProfesor(@Param('id') id: number) {
+        return this.service.getGruposByProfesor(id);
+    }
+
     @Get(':id')
 
     obtenerGrupo(@Param('id') id: number) {

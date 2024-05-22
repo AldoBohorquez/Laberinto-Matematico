@@ -40,6 +40,20 @@ export class GruposService {
         }
     }
 
+    async getGruposByProfesor(id:number)
+    {
+        try {
+            const profesorFind = await this.dataSorce.getRepository(ProfesoresEntity).findOne({where:{id:id},relations:['grupos']})
+            if(!profesorFind)
+            {
+                return new HttpException('No se encontro el profesor',HttpStatus.NOT_FOUND)
+            }
+            return profesorFind.grupos
+        } catch (error) {
+            throw new HttpException('Error al obtener los grupos',HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
     async agregarGrupo(grupoBase:GruposDto)
     {
         try {
