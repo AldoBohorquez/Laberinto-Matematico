@@ -1,6 +1,13 @@
 export interface Profesor {
-  id:             number;
+  id: number;
   nombreCompleto: string;
-  usuario:        string;
-  grupos?:         any[];
+  usuario: string;
+  grupos?: Grupo[];
+}
+
+export interface Grupo {
+  id_grupo: number;
+  nombre: string;
+  profesorId: number;
+  salasId: number;
 }

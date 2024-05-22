@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { Profesor } from '../../interfaces/profesor.interface';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login-profesor',
@@ -17,25 +17,12 @@ import { Profesor } from '../../interfaces/profesor.interface';
 
 export class LoginProfesorComponent {
 
+  sweet = inject(AlertService);
   fb = inject(FormBuilder);
   route = inject(Router);
   apiS = inject(ApiService);
   authService = inject(AutenticacionService);
   formProduct!: FormGroup;
-
-  alert(
-    msn: string,
-    icon: 'error' | 'info' | 'question' | 'success' | 'warning'
-  ) {
-    Swal.fire({
-      text: msn,
-      icon: icon,
-      toast: true,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  }
 
   constructor(fb: FormBuilder) {
     this.formProduct = this.fb.group({
@@ -54,7 +41,7 @@ export class LoginProfesorComponent {
           console.log('Login exitoso', response);
         },
         (error) => {
-          this.alert('Usuario o contraseña incorrectos', 'error');
+          this.sweet.alert('Usuario o contraseña incorrectos', 'error');
           console.error('Error en el login', error);
         }
       );

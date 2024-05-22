@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api.service';
-import Swal from 'sweetalert2';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-registrar-profesor',
@@ -12,25 +12,12 @@ import Swal from 'sweetalert2';
   styleUrl: './registrar-profesor.component.css',
 })
 export class RegistrarProfesorComponent {
+  sweet = inject(AlertService);
   fb = inject(FormBuilder);
   apiS = inject(ApiService);
   route = inject(Router);
   activeRoute = inject(ActivatedRoute);
   formProduct!: FormGroup;
-
-  alert(
-    msn: string,
-    icon: 'error' | 'info' | 'question' | 'success' | 'warning'
-  ) {
-    Swal.fire({
-      text: msn,
-      icon: icon,
-      toast: true,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  }
 
   constructor(fb: FormBuilder) {
     this.formProduct = this.fb.group({
@@ -50,7 +37,7 @@ export class RegistrarProfesorComponent {
       console.log(data);
       this.formProduct.reset();
       this.route.navigateByUrl('/loginProfesor');
-      this.alert('Información de usuario guardada exitosamente', 'success');
+      this.sweet.alert('Información de usuario guardada exitosamente', 'success');
     });
   }
 }
