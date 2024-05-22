@@ -15,22 +15,19 @@ export class BienvenidaComponent implements OnInit {
 
   apiS = inject(ApiService);
 
-  groupList = Array<Grupo>();
+  groupList: Grupo[]=[];
 
   constructor(private authService: AutenticacionService) { }
 
   ngOnInit(): void {
     this.authService.getUser().subscribe(usuario => {
-      this.usuarioLogueado = usuario;
-      console.log('Usuario logueado', this.usuarioLogueado);
       this.apiS.getGrupoByProfesor(usuario!.id).subscribe(
         {
           next: (response: Grupo[]) => {
             this.groupList = response;
-            console.log('Grupos del profesor', this.groupList);
           }
         }
       )
-    });    
+    });
   }
 }
