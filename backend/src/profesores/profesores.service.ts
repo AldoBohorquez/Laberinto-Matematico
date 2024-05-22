@@ -88,7 +88,7 @@ export class ProfesoresService {
 
     async loginProfesor(usuario: string, password: string) {
         try {
-            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario }, relations: ['grupos'], select: ['id', 'nombreCompleto', 'usuario', 'password'] });
+            const profesorFind = await this.dataSource.getRepository(ProfesoresEntity).findOne({ where: { usuario: usuario }, relations: ['grupos'], select: ['id', 'nombreCompleto', 'usuario'] });
     
             if (!profesorFind) {
                 throw new HttpException("Usuario no encontrado", HttpStatus.NOT_FOUND);
