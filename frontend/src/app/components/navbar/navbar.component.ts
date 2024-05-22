@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,7 @@ import { AutenticacionService } from '../../services/autenticacion.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-
-  authService=inject(AutenticacionService);
+  authService = inject(AutenticacionService);
 
   isLoginProfesorPage: boolean = false;
   isHomePage: boolean = false;
@@ -21,12 +21,12 @@ export class NavbarComponent implements OnInit {
 
   //mostrar o no, botones
   showBtnIngresar: boolean = true;
-  showBtnsProfesor: boolean = true;
+  showBtnsProfesor: boolean = false;
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
-
 
   constructor(private router: Router) {}
 
@@ -51,11 +51,19 @@ export class NavbarComponent implements OnInit {
           event.url === '/crudEstudiante' ||
           event.url === '/visualizacion';
 
-        //muestra botones
-        this.showBtnIngresar = !this.isJuegoPage && !this.isProfesorPage;
-        this.showBtnsProfesor =
-          !this.isHomePage && !this.isLoginProfesorPage && !this.isJuegoPage;
+          this.updateButtonVisibility();
       }
     });
+
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+      this.showBtnIngresar = !isLoggedIn && !this.isJuegoPage && !this.isProfesorPage;
+      this.showBtnsProfesor = isLoggedIn && !this.isHomePage && !this.isLoginProfesorPage && !this.isJuegoPage;
+    });
+  }
+
+  private updateButtonVisibility() {
+    const isLoggedIn = this.authService.isLoggedInSync();
+    this.showBtnIngresar = !isLoggedIn && !this.isJuegoPage && !this.isProfesorPage;
+    this.showBtnsProfesor = isLoggedIn && !this.isHomePage && !this.isLoginProfesorPage && !this.isJuegoPage;
   }
 }

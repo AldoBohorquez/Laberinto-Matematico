@@ -43,19 +43,19 @@
         <a
           class="nav-link active linkInicio"
           routerLink="/bienvenida"
-          *ngIf="showBtnsProfesor"
+          *ngIf="authService.isLoggedInSync()"
           >Inicio</a
         >
         <a
           class="nav-link active linkInicio"
           routerLink="/registrarGrupo"
-          *ngIf="showBtnsProfesor"
+          *ngIf="authService.isLoggedInSync()"
           >Registrar Grupo</a
         >
         <a
           class="nav-link active linkInicio"
           routerLink="/crudGrupo"
-          *ngIf="showBtnsProfesor"
+          *ngIf="authService.isLoggedInSync()"
           >Grupos</a
         >
         <a

@@ -21,7 +21,7 @@ export class ApiService {
   }
 
   loginProfesor(profe: Profesor) {
-    return this._http.post('http://localhost:3000/profesores/login', profe,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+    return this._http.post<Profesor>('http://localhost:3000/profesores/login', profe,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
 }
