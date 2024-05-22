@@ -37,11 +37,13 @@ export const routes: Routes = [
   },
   {
     path:'registrarGrupo',
-    component: RegistrarGrupoComponent
+    component: RegistrarGrupoComponent,
+    canActivate: [authGuard]
   },
   {
     path:'registrarEstudiante',
-    component: RegistrarEstudianteComponent
+    component: RegistrarEstudianteComponent,
+    canActivate: [authGuard]
   },
   {
     path:'puntuacion',
@@ -54,11 +56,13 @@ export const routes: Routes = [
   },
   {
     path:'visualizacion',
-    component: VisualizacionGrupoComponent
+    component: VisualizacionGrupoComponent,
+    canActivate: [authGuard]
   },
   {
     path:'crudEstudiante',
-    component: CrudEstudianteComponent
+    component: CrudEstudianteComponent,
+    canActivate: [authGuard]
   },
   {
     path:'personajes',
@@ -66,7 +70,8 @@ export const routes: Routes = [
   },
   {
     path:'crudGrupo',
-    component: CrudGrupoComponent
+    component: CrudGrupoComponent,
+    canActivate: [authGuard]
   },
   {
     path: '**',

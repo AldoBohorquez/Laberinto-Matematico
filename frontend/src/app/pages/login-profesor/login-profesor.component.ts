@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AutenticacionService } from '../../services/autenticacion.service';
+import { Profesor } from '../../interfaces/profesor.interface';
 
 @Component({
   selector: 'app-login-profesor',
@@ -47,11 +48,10 @@ export class LoginProfesorComponent {
   logueado() {
     if (this.formProduct.valid) {
       this.apiS.loginProfesor(this.formProduct.value).subscribe(
-        (response) => {
-          this.authService.login();
+        (response: Profesor) => {
+          this.authService.login(response);
           this.route.navigateByUrl('/bienvenida');
           console.log('Login exitoso', response);
-
         },
         (error) => {
           this.alert('Usuario o contraseña incorrectos', 'error');
@@ -60,6 +60,7 @@ export class LoginProfesorComponent {
       );
     }
   }
+
 
 
 
