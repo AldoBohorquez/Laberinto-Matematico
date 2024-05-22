@@ -28,4 +28,8 @@ export class ApiService {
     return this._http.post<Grupo>('http://localhost:3000/grupos', group,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
+  getGrupoByProfesor(profeId: number){
+    return this._http.get<Grupo[]>(`http://localhost:3000/grupos/profesor/${profeId}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
 }

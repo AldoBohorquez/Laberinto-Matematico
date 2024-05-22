@@ -12,39 +12,10 @@
     </div>
   </div>
   <div class="row d-flex flex-wrap gap-5 p-5 justify-content-center">
+    @for (item of groupList; track $index) {
     <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
+      {{item.nombre}}
     </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-    <button class="btn group col-auto p-3 rounded-3">
-      Grupo #
-    </button>
-
+  }
   </div>
 </div>
