@@ -35,7 +35,7 @@ export class SalasController {
         return this.service.eliminarSala(id);
     }
 
-    @Post('activar')
+    @Put('activar')
     activarSala(@Body() activeB: activarSalasDto){
         return this.service.activarSala(activeB);
     }
