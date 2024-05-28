@@ -9,5 +9,11 @@ export interface Grupo {
   id_grupo: number;
   nombre: string;
   profesorId: number;
-  salasId: number;
+  sala: Salas;
+}
+
+export interface Salas {
+  id:            number;
+  active:        boolean;
+  gruposId:      number;
 }

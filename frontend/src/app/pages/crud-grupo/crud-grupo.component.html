@@ -23,50 +23,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center">1</td>
-                    <td class="text-center">Grupo 1</td>
-                    <td class="text-center">Activo</td>
-                    <td class="text-center">
-                        <button type="button" class="btn editar ">
-                            Editar
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn eliminar">
-                            Eliminar
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn ver">
-                            Ver
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="cafeClaro">2</td>
-                    <td class="cafeClaro">Grupo 2</td>
-                    <td class="cafeClaro">Activo</td>
-                    <td class="cafeClaro">
-                        <button type="button" class="btn editar">
-                            Editar
-                        </button>
-                    </td>
-                    <td class="cafeClaro">
-                        <button type="button" class="btn eliminar">
-                            Eliminar
-                        </button>
-                    </td>
-                    <td class="cafeClaro">
-                        <button type="button" class="btn ver">
-                            Ver
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center">3</td>
-                    <td class="text-center">Grupo 3</td>
-                    <td class="text-center">Desactivo</td>
+                @for (item of groupList; track $index) {
+                  <tr>
+                    <td class="text-center"> {{item.id_grupo}} </td>
+                    <td class="text-center"> {{item.nombre}} </td>
+                    <td class="text-center"> {{item.sala.active ? 'Activo' : 'Desactivo'}}  </td>
                     <td class="text-center">
                         <button type="button" class="btn editar">
                             Editar
@@ -83,6 +44,9 @@
                         </button>
                     </td>
                 </tr>
+
+                }
+
                 <tr>
                     <td class="cafeClaro">4</td>
                     <td class="cafeClaro">Grupo 4</td>
