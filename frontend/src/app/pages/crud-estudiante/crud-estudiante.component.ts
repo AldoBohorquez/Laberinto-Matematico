@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { Alumno, Grupo } from '../../interfaces/profesor.interface';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-crud-estudiante',
@@ -16,7 +17,8 @@ export class CrudEstudianteComponent {
   miGrupo: Grupo | null = null;
   listaAlumnos:Alumno[] = [];
   _activeRoute = inject(ActivatedRoute);
-
+  _router = inject(Router);
+  sweet = inject(AlertService);
 
   constructor(){
     this._activeRoute.params.subscribe(params => {
@@ -35,4 +37,17 @@ export class CrudEstudianteComponent {
       }
     })
   };
+
+  goToRegister(id: number){
+    this._router.navigateByUrl(`registrarEstudiante/${id}`);
+  }
+
+  deleteAlumno(id: number) {
+    this.apiS.deleteAlumno(id).subscribe(() => {
+      this.listaAlumnos = this.listaAlumnos.filter(alum => alum.id !== id);
+      this.sweet.alert('Estudiante eliminado','error');
+    }, error => {
+      console.error('Error al eliminar el Estudiante:', error);
+    });
+  }
 }

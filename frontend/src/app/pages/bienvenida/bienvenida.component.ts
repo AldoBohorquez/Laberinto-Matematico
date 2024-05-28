@@ -22,6 +22,7 @@ export class BienvenidaComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getUser().subscribe(usuario => {
+      this.usuarioLogueado = usuario;
       this.apiS.getGrupoByProfesor(usuario!.id).subscribe(
         {
           next: (response: Grupo[]) => {

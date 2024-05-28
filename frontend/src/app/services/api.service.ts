@@ -43,4 +43,7 @@ export class ApiService {
   newAlumno(alumno:Alumno){
     return this._http.post<Alumno>('http://localhost:3000/alumnos', alumno,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
+  deleteAlumno(id_alumno:number){
+    return this._http.delete(`http://localhost:3000/alumnos/${id_alumno}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
 }

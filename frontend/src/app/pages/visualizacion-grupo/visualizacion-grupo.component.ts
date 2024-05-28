@@ -36,7 +36,11 @@ export class VisualizacionGrupoComponent {
   };
 
 
-  goToDetail(id: number){
+  goToRegister(id: number){
     this._router.navigateByUrl(`registrarEstudiante/${id}`);
+  }
+
+  goToStudents(id: number){
+    this._router.navigateByUrl(`crudEstudiante/${id}`);
   }
 }
