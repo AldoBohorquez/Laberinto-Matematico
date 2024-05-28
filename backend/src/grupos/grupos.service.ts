@@ -43,7 +43,7 @@ export class GruposService {
     async getGruposByProfesor(id:number)
     {
         try {
-            const profesorFind = await this.dataSorce.getRepository(ProfesoresEntity).findOne({where:{id:id},relations:['grupos']})
+            const profesorFind = await this.dataSorce.getRepository(ProfesoresEntity).findOne({where:{id:id},relations:['grupos', 'grupos.salas']})
             if(!profesorFind)
             {
                 return new HttpException('No se encontro el profesor',HttpStatus.NOT_FOUND)

@@ -23,45 +23,22 @@
                 </tr>
             </thead>
             <tbody>
-                @for (item of groupList; track $index) {
-                  <tr>
-                    <td class="text-center"> {{item.id_grupo}} </td>
-                    <td class="text-center"> {{item.nombre}} </td>
-                    <td class="text-center"> {{item.sala.active ? 'Activo' : 'Desactivo'}}  </td>
-                    <td class="text-center">
+
+                  <tr *ngFor="let item of groupList; let i = index" >
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}"> {{item.id_grupo}} </td>
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}"> {{item.nombre}} </td>
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}"> {{item.salas?.active ? 'Activo':'Inactivo'}}  </td>
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}">
                         <button type="button" class="btn editar">
                             Editar
                         </button>
                     </td>
-                    <td class="text-center">
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}">
                         <button type="button" class="btn eliminar">
                             Eliminar
                         </button>
                     </td>
-                    <td class="text-center">
-                        <button type="button" class="btn ver">
-                            Ver
-                        </button>
-                    </td>
-                </tr>
-
-                }
-
-                <tr>
-                    <td class="cafeClaro">4</td>
-                    <td class="cafeClaro">Grupo 4</td>
-                    <td class="cafeClaro">Activo</td>
-                    <td class="cafeClaro">
-                        <button type="button" class="btn editar">
-                            Editar
-                        </button>
-                    </td>
-                    <td class="cafeClaro">
-                        <button type="button" class="btn eliminar">
-                            Eliminar
-                        </button>
-                    </td>
-                    <td class="cafeClaro">
+                    <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}">
                         <button type="button" class="btn ver">
                             Ver
                         </button>

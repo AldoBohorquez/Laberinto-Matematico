@@ -9,7 +9,7 @@ export interface Grupo {
   id_grupo: number;
   nombre: string;
   profesorId: number;
-  sala: Salas;
+  salas?: Salas;
 }
 
 export interface Salas {
