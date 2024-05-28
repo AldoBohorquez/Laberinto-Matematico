@@ -44,12 +44,11 @@ export class NavbarComponent implements OnInit {
           event.url === '/personajes';
         this.isProfesorPage =
           event.url === '/registrarGrupo' ||
-          event.url === '/registrarEstudiante' ||
           event.url === '/bienvenida' ||
           event.url === '/crudGrupo' ||
-          event.url === '/registrarEstudiante' ||
-          event.url === '/crudEstudiante' ||
-          event.url.startsWith('/visualizacion/');;
+          event.url.startsWith('/visualizacion/') ||
+          event.url.startsWith('/registrarEstudiante/')||
+          event.url.startsWith('/crudEstudiante/');
 
           this.updateButtonVisibility();
       }

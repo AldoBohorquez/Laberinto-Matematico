@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 
-import { Grupo, Profesor } from '../interfaces/profesor.interface';
+import { Alumno, Grupo, Profesor } from '../interfaces/profesor.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -36,4 +36,11 @@ export class ApiService {
     return this._http.get<Grupo>(`http://localhost:3000/grupos/${id_grupo}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
+  deleteGrupo(id_grupo:number){
+    return this._http.delete(`http://localhost:3000/grupos/${id_grupo}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  newAlumno(alumno:Alumno){
+    return this._http.post<Alumno>('http://localhost:3000/alumnos', alumno,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
 }

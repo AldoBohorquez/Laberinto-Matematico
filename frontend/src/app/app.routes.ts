@@ -41,7 +41,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'registrarEstudiante',
+    path:'registrarEstudiante/:id',
     component: RegistrarEstudianteComponent,
     canActivate: [authGuard]
   },
@@ -60,7 +60,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'crudEstudiante',
+    path:'crudEstudiante/:id',
     component: CrudEstudianteComponent,
     canActivate: [authGuard]
   },
