@@ -55,7 +55,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'visualizacion',
+    path:'visualizacion/:id',
     component: VisualizacionGrupoComponent,
     canActivate: [authGuard]
   },

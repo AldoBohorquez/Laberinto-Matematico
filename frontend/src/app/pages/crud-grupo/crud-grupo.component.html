@@ -39,7 +39,7 @@
                         </button>
                     </td>
                     <td [ngClass]="{'text-center': i % 2 === 0, 'cafeClaro': i % 2 !== 0}">
-                        <button type="button" class="btn ver">
+                        <button type="button" class="btn ver" (click)="goToDetail(item.id_grupo)">
                             Ver
                         </button>
                     </td>

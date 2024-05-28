@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Grupo } from '../../interfaces/profesor.interface';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { ApiService } from '../../services/api.service';
@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class CrudGrupoComponent implements OnInit {
   groupList: Grupo[] = [];
   apiS = inject(ApiService);
+  _router = inject(Router);
 
   constructor(private authService: AutenticacionService) {}
 
@@ -26,5 +27,9 @@ export class CrudGrupoComponent implements OnInit {
         },
       });
     });
+  }
+
+  goToDetail(id: number){
+    this._router.navigateByUrl(`visualizacion/${id}`);
   }
 }

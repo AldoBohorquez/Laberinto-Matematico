@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
           event.url === '/crudGrupo' ||
           event.url === '/registrarEstudiante' ||
           event.url === '/crudEstudiante' ||
-          event.url === '/visualizacion';
+          event.url.startsWith('/visualizacion/');;
 
           this.updateButtonVisibility();
       }

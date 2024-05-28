@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { Grupo, Profesor } from '../../interfaces/profesor.interface';
 import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bienvenida',
@@ -12,7 +13,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class BienvenidaComponent implements OnInit {
   usuarioLogueado: Profesor | null = null;
-
+  _router = inject (Router);
   apiS = inject(ApiService);
 
   groupList: Grupo[]=[];
@@ -29,5 +30,9 @@ export class BienvenidaComponent implements OnInit {
         }
       )
     });
+  }
+
+  goToDetail(id: number){
+    this._router.navigateByUrl(`visualizacion/${id}`);
   }
 }
