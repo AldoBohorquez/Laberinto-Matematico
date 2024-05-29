@@ -9,7 +9,14 @@ import { activarSalasDto } from './dto/activarSalas.dto';
 export class SalasService {
 
     constructor(private dataSource:DataSource)
-    {}
+    {
+        const interval = 1000 * 60 * 60; 
+        setInterval(() => {
+            this.checador();
+            console.log('Desactivando salas');
+            
+        }, interval);
+    }
 
     async obtenerSalas()
     {
@@ -95,15 +102,13 @@ export class SalasService {
     }
 
 
-    async checadorSalas() {
+    async checador() {
         try {
-
+            const currentDate = new Date();
             const salas = await this.dataSource.getRepository(SalasEntity).find();
             if (!salas) {
-                return new HttpException("No se encontraron salas", HttpStatus.NOT_FOUND)
+                return new HttpException("No se encontraron salas", HttpStatus.NOT_FOUND);
             }
-
-            const currentDate = new Date();
 
             for (const sala of salas) {
                 if (sala.desactiveDate && currentDate > sala.desactiveDate) {
@@ -113,13 +118,12 @@ export class SalasService {
                     await this.dataSource.getRepository(SalasEntity).save(sala);
                 }
             }
+
             return salas;
         } catch (error) {
-            throw new HttpException("Error al checar las salas", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new HttpException("Error al desactivar las salas", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //implementar el metodo para desactivar salas que ya cumplieron su tiempo de activacion
-    //el metodo debe de ser llamado por un cron job cada 24 horas
 
 }

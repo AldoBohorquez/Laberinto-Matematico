@@ -13,9 +13,9 @@ export class SalasEntity
     @Column({type:'integer',nullable:true})
     gruposId:number
 
-    @Column({type:'date',nullable:true})
+    @Column({type:'timestamp',nullable:true})
     activeDate:Date
 
-    @Column({type:'date',nullable:true})
+    @Column({type:'timestamp',nullable:true})
     desactiveDate:Date
 }
