@@ -13,6 +13,7 @@ import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante
 import { PersonajesComponent } from './pages/personajes/personajes.component';
 import { CrudGrupoComponent } from './pages/crud-grupo/crud-grupo.component';
 import { authGuard } from './auth.guard';
+import { GameComponent } from './pages/game/game.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +73,10 @@ export const routes: Routes = [
     path:'crudGrupo',
     component: CrudGrupoComponent,
     canActivate: [authGuard]
+  },
+  {
+    path:'game',
+    component: GameComponent
   },
   {
     path: '**',

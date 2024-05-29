@@ -1,0 +1,65 @@
+.mainContainer {
+    padding: 5%;
+    background-image: url('../../../assets/images/fondoJuego.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.character {
+    width: 25%;
+    min-width: 50px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.card {
+    width: 80%;
+}
+
+.line {
+    border-width: 2px;
+}
+
+.incorrect {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 100%;
+    border-color: #000;
+    background-color: #E49393;
+    text-align: start;
+    font-weight: bold;
+}
+
+.correct {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 100%;
+    border-color: #000;
+    background-color: #BBEBBD;
+    text-align: start;
+    font-weight: bold;
+}
+
+.other {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 100%;
+    border-color: #000;
+    text-align: start;
+    font-weight: bold;
+}
+
+.temp {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 100%;
+    background-color: #C9D9DD;
+    font-weight: bold;
+    font-size: 1.5em;
+}
