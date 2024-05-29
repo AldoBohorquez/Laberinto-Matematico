@@ -10,6 +10,7 @@ export interface Grupo {
   nombre: string;
   profesorId: number;
   salas?: Salas;
+  alumnos?: Alumno[];
 }
 
 export interface Salas {
@@ -17,3 +18,12 @@ export interface Salas {
   active:        boolean;
   gruposId:      number;
 }
+
+export interface Alumno {
+  id:           number;
+  nombre:       string;
+  puntuaciones: any[];
+  grupos:       Grupo;
+}
+
+
