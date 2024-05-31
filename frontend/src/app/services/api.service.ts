@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 
-import { Alumno, Grupo, Profesor } from '../interfaces/profesor.interface';
+import { Alumno, AlumnosLogin, Grupo, Profesor } from '../interfaces/profesor.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 
 @Injectable({
@@ -22,6 +23,10 @@ export class ApiService {
 
   loginProfesor(profe: Profesor) {
     return this._http.post<Profesor>('http://localhost:3000/profesores/login', profe,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  loginAlumno(alumnoLogin: AlumnosLogin) {
+    return this._http.post<Alumno>('http://localhost:3000/alumnos/login', alumnoLogin);
   }
 
   nuevoGrupo(group: Grupo){

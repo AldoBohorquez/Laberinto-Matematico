@@ -20,6 +20,14 @@
   cursor: pointer;
 }
 
+.linkSalirAlumno{
+  border-radius: 10px;
+  font-weight: 500;
+  background-color: black !important;
+  color: #BBEBBD  !important;
+  cursor: pointer;
+}
+
 
 
 /* cambiar colores de navbar*/

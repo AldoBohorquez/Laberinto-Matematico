@@ -37,6 +37,7 @@ export const routes: Routes = [
   {
     path:'section',
     component: SectionComponent,
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'registrarGrupo',

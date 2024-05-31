@@ -26,4 +26,8 @@ export interface Alumno {
   grupos:       Grupo;
 }
 
+export interface AlumnosLogin {
+  estudianteId:number;
+  grupoId:number;
+}
 
