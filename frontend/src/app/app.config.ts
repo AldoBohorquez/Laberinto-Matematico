@@ -5,7 +5,7 @@ import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { AutenticacionService } from './services/autenticacion.service';
-import { authGuard } from './auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -12,8 +12,9 @@ import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante.component';
 import { PersonajesComponent } from './pages/personajes/personajes.component';
 import { CrudGrupoComponent } from './pages/crud-grupo/crud-grupo.component';
-import { authGuard } from './auth.guard';
+import { authGuard } from './guards/auth.guard';
 import { GameComponent } from './pages/game/game.component';
+import { alumnosAuthGuard } from './guards/alumnos-auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,68 +32,55 @@ export const routes: Routes = [
   {
     path:'level',
     component: LevelComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'alumno' }
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'section',
     component: SectionComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'alumno' }
   },
   {
     path:'registrarGrupo',
     component: RegistrarGrupoComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'registrarEstudiante/:id',
     component: RegistrarEstudianteComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'puntuacion',
     component: PuntuacionComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'alumno' }
   },
   {
     path:'bienvenida',
     component: BienvenidaComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'visualizacion/:id',
     component: VisualizacionGrupoComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'crudEstudiante/:id',
     component: CrudEstudianteComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'personajes',
     component: PersonajesComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'alumno' }
+
   },
   {
     path:'crudGrupo',
     component: CrudGrupoComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'profesor' }
+    canActivate: [authGuard]
   },
   {
     path:'game',
     component: GameComponent,
-    canActivate: [authGuard],
-    data: { expectedRole: 'alumno' }
+
   },
   {
     path: '**',
