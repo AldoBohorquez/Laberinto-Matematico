@@ -30,53 +30,69 @@ export const routes: Routes = [
   },
   {
     path:'level',
-    component: LevelComponent
+    component: LevelComponent,
+    canActivate: [authGuard],
+    data: { expectedRole: 'alumno' }
   },
   {
     path:'section',
-    component: SectionComponent
+    component: SectionComponent,
+    canActivate: [authGuard],
+    data: { expectedRole: 'alumno' }
   },
   {
     path:'registrarGrupo',
     component: RegistrarGrupoComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'registrarEstudiante/:id',
     component: RegistrarEstudianteComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'puntuacion',
-    component: PuntuacionComponent
+    component: PuntuacionComponent,
+    canActivate: [authGuard],
+    data: { expectedRole: 'alumno' }
   },
   {
     path:'bienvenida',
     component: BienvenidaComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'visualizacion/:id',
     component: VisualizacionGrupoComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'crudEstudiante/:id',
     component: CrudEstudianteComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'personajes',
-    component: PersonajesComponent
+    component: PersonajesComponent,
+    canActivate: [authGuard],
+    data: { expectedRole: 'alumno' }
   },
   {
     path:'crudGrupo',
     component: CrudGrupoComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: { expectedRole: 'profesor' }
   },
   {
     path:'game',
-    component: GameComponent
+    component: GameComponent,
+    canActivate: [authGuard],
+    data: { expectedRole: 'alumno' }
   },
   {
     path: '**',
