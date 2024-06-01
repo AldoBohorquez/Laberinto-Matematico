@@ -158,43 +158,26 @@ export class AlumnosService {
         }
     }
 
-    async loginAlumno(bodyLogin: AlumnosLoginDto) {
+    async loginAlumno(id_Estudiante: number, id_Grupo: number) {
         try {
-            const grupoFind = await this.dataSorce
-                .getRepository(GruposEntity)
-                .findOne({
-                    where: { id_grupo: bodyLogin.grupoId },
-                    relations: ['alumnos'],
-                });
-
-            if (!grupoFind) {
-                return new HttpException(
-                    'No se encontro el grupo',
-                    HttpStatus.NOT_FOUND,
-                );
+            // Verificar si existe un alumno con el ID proporcionado y si está asociado al grupo con el ID proporcionado
+            const alumno = await this.dataSorce.getRepository(AlumnosEntity).findOne({
+                where: {
+                    id: id_Estudiante,
+                    grupos: { id_grupo: id_Grupo }
+                },
+                relations: ['grupos'] 
+            });
+    
+            if (alumno) {
+                return alumno;
+            } else {
+                throw new HttpException('No se encontró un alumno válido para el grupo proporcionado', HttpStatus.NOT_FOUND);
             }
-
-            const alumnoFind = await this.dataSorce
-                .getRepository(AlumnosEntity)
-                .findOne({
-                    where: {
-                        id: bodyLogin.estudianteId,
-                        grupos: {
-                            id_grupo: bodyLogin.grupoId,
-                        },
-                    },
-                });
-
-            if (!alumnoFind) {
-                return false
-            }
-
-            return true;
         } catch (error) {
-            throw new HttpException(
-                'Error al logear el alumno',
-                HttpStatus.INTERNAL_SERVER_ERROR,
-            );
+            throw new HttpException('Error al iniciar sesión como alumno', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
 }

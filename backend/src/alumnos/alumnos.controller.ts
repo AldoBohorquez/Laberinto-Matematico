@@ -30,7 +30,7 @@ export class AlumnosController {
 
     @Post('login')
     loginAlumno(@Body() body:AlumnosLoginDto) {
-        return this.service.loginAlumno(body);
+        return this.service.loginAlumno( body.estudianteId, body.grupoId );
     }
 
     @Put(':id')

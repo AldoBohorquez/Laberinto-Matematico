@@ -12,8 +12,9 @@ import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 import { CrudEstudianteComponent } from './pages/crud-estudiante/crud-estudiante.component';
 import { PersonajesComponent } from './pages/personajes/personajes.component';
 import { CrudGrupoComponent } from './pages/crud-grupo/crud-grupo.component';
-import { authGuard } from './auth.guard';
+import { authGuard } from './guards/auth.guard';
 import { GameComponent } from './pages/game/game.component';
+import { alumnosAuthGuard } from './guards/alumnos-auth.guard';
 
 export const routes: Routes = [
   {
@@ -30,11 +31,13 @@ export const routes: Routes = [
   },
   {
     path:'level',
-    component: LevelComponent
+    component: LevelComponent,
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'section',
-    component: SectionComponent
+    component: SectionComponent,
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'registrarGrupo',
@@ -48,7 +51,7 @@ export const routes: Routes = [
   },
   {
     path:'puntuacion',
-    component: PuntuacionComponent
+    component: PuntuacionComponent,
   },
   {
     path:'bienvenida',
@@ -67,7 +70,8 @@ export const routes: Routes = [
   },
   {
     path:'personajes',
-    component: PersonajesComponent
+    component: PersonajesComponent,
+
   },
   {
     path:'crudGrupo',
@@ -76,7 +80,8 @@ export const routes: Routes = [
   },
   {
     path:'game',
-    component: GameComponent
+    component: GameComponent,
+
   },
   {
     path: '**',

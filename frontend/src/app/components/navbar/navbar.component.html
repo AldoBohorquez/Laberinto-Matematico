@@ -64,6 +64,12 @@
           (click)="logout()"
           >Salir</a
         >
+        <a
+          class="nav-link active linkSalirAlumno"
+          *ngIf="authAlumnoService.isLoggedInSync()"
+          (click)="logout()"
+          >Salir</a
+        >
       </div>
     </div>
   </div>

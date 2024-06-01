@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { Observable } from 'rxjs';
+import { AutenticacionAlumnoService } from '../../services/autenticacion-alumno.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class NavbarComponent implements OnInit {
   authService = inject(AutenticacionService);
+  authAlumnoService = inject(AutenticacionAlumnoService);
 
   isLoginProfesorPage: boolean = false;
   isHomePage: boolean = false;
@@ -25,6 +27,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.authAlumnoService.logout();
     this.router.navigate(['/home']);
   }
 
@@ -51,6 +54,10 @@ export class NavbarComponent implements OnInit {
           event.url.startsWith('/crudEstudiante/');
 
           this.updateButtonVisibility();
+
+          if (this.isHomePage) {
+            this.logout();
+          }
       }
     });
 
