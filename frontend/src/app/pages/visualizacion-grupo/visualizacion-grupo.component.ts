@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Alumno, Grupo } from '../../interfaces/profesor.interface';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-visualizacion-grupo',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './visualizacion-grupo.component.html',
   styleUrl: './visualizacion-grupo.component.css'
 })
@@ -42,5 +43,11 @@ export class VisualizacionGrupoComponent {
 
   goToStudents(id: number){
     this._router.navigateByUrl(`crudEstudiante/${id}`);
+  }
+
+
+  onChangeSwitch(event: any) {
+    const newValue = event.target.checked;
+    console.log('Nuevo valor del interruptor:', newValue);
   }
 }

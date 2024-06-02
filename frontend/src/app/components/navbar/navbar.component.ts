@@ -42,9 +42,10 @@ export class NavbarComponent implements OnInit {
           event.url === '/loginProfesor' || event.url === '/registrarProfesor';
         this.isJuegoPage =
           event.url === '/section' ||
-          event.url === '/level' ||
+          event.url.startsWith('/level') ||
           event.url === '/puntuacion' ||
-          event.url === '/personajes';
+          event.url.startsWith('/personajes')||
+          event.url.startsWith('/game');
         this.isProfesorPage =
           event.url === '/registrarGrupo' ||
           event.url === '/bienvenida' ||

@@ -30,7 +30,7 @@ export const routes: Routes = [
     component: LoginProfesorComponent
   },
   {
-    path:'level',
+    path:'level/:section',
     component: LevelComponent,
     canActivate: [alumnosAuthGuard]
   },
@@ -52,6 +52,7 @@ export const routes: Routes = [
   {
     path:'puntuacion',
     component: PuntuacionComponent,
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'bienvenida',
@@ -69,9 +70,9 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'personajes',
+    path:'personajes/:nivel',
     component: PersonajesComponent,
-
+    canActivate: [alumnosAuthGuard]
   },
   {
     path:'crudGrupo',
@@ -79,9 +80,9 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'game',
+    path:'game/:personaje/:nivel',
     component: GameComponent,
-
+    canActivate: [alumnosAuthGuard]
   },
   {
     path: '**',
