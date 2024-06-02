@@ -45,10 +45,18 @@ export class ApiService {
     return this._http.delete(`http://localhost:3000/grupos/${id_grupo}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
+  updateGrupo(id_grupo:number, nombre:string) {
+    return this._http.put(`http://localhost:3000/grupos/${id_grupo}`, {nombre},{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
   newAlumno(alumno:Alumno){
     return this._http.post<Alumno>('http://localhost:3000/alumnos', alumno,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
   deleteAlumno(id_alumno:number){
     return this._http.delete(`http://localhost:3000/alumnos/${id_alumno}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  updateAlumno(id_alumno:number, nombre:string) {
+    return this._http.put(`http://localhost:3000/alumnos/${id_alumno}`, {nombre},{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 }

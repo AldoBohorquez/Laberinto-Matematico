@@ -35,8 +35,8 @@ export class GruposController {
     }
 
     @Put(':id')
-    actualizarGrupo(@Param('id') id: number, @Body() grupoBase: GruposDto) {
-        return this.service.actualizarGrupo(id, grupoBase);
+    actualizarGrupo(@Param('id') id: number, @Body() body: { nombre: string }) {
+        return this.service.actualizarGrupo(id, body.nombre);
     }
     
 }

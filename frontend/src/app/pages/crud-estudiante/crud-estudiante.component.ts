@@ -4,11 +4,12 @@ import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { Alumno, Grupo } from '../../interfaces/profesor.interface';
 import { AlertService } from '../../services/alert.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-crud-estudiante',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './crud-estudiante.component.html',
   styleUrl: './crud-estudiante.component.css'
 })
@@ -16,6 +17,9 @@ export class CrudEstudianteComponent {
   apiS = inject(ApiService);
   miGrupo: Grupo | null = null;
   listaAlumnos:Alumno[] = [];
+  nombreAlumno: string = '';
+  alumnoId: number | null = null;
+
   _activeRoute = inject(ActivatedRoute);
   _router = inject(Router);
   sweet = inject(AlertService);
@@ -49,5 +53,31 @@ export class CrudEstudianteComponent {
     }, error => {
       console.error('Error al eliminar el Estudiante:', error);
     });
+  }
+
+
+  openEditModal(id: number, nombre: string) {
+    this.alumnoId = id;
+    this.nombreAlumno = nombre;
+  }
+
+  guardarCambios() {
+    if (this.alumnoId !== null) {
+      this.apiS.updateAlumno(this.alumnoId, this.nombreAlumno).subscribe(
+
+        (response) => {
+          console.log( response);
+          const estudiante = this.listaAlumnos.find(g => g.id === this.alumnoId);
+          if (estudiante) {
+            estudiante.nombre = this.nombreAlumno;
+          }
+          this.sweet.alert('Alumno actualizado', 'info');
+        },
+        (error) => {
+          console.error('Error al actualizar alumno:', error);
+          this.sweet.alert('Error al actualizar alumno', 'error');
+        }
+      );
+    }
   }
 }

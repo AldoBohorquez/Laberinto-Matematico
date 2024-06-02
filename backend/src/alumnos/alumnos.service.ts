@@ -112,7 +112,7 @@ export class AlumnosService {
         }
     }
 
-    async actualizarAlumno(id: number, alumnoBase: AlumnosDto) {
+    async actualizarAlumno(id: number, nombre: string) {
         try {
             const alumnoFind = await this.dataSorce
                 .getRepository(AlumnosEntity)
@@ -125,9 +125,11 @@ export class AlumnosService {
                 );
             }
 
-            return await this.dataSorce
-                .getRepository(AlumnosEntity)
-                .update({ id: alumnoFind.id }, alumnoBase);
+            alumnoFind.nombre = nombre;
+            await this.dataSorce.getRepository(AlumnosEntity).update(id,alumnoFind);
+        
+            return alumnoFind;
+
         } catch (error) {
             throw new HttpException(
                 'Error al actualizar el alumno',

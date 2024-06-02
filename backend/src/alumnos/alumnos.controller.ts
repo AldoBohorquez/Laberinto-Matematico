@@ -34,8 +34,8 @@ export class AlumnosController {
     }
 
     @Put(':id')
-    actualizarAlumno(@Param('id') id: number, @Body() body:AlumnosDto) {
-        return this.service.actualizarAlumno(id, body);
+    actualizarAlumno(@Param('id') id: number, @Body() body:{nombre: string}) {
+        return this.service.actualizarAlumno(id, body.nombre);
     }
 
     @Delete(':id')
