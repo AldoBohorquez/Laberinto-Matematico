@@ -50,7 +50,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path:'puntuacion',
+    path:'puntuacion/:personaje/:score',
     component: PuntuacionComponent,
     canActivate: [alumnosAuthGuard]
   },

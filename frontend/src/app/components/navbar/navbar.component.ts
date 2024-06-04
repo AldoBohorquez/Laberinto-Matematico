@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
         this.isJuegoPage =
           event.url === '/section' ||
           event.url.startsWith('/level') ||
-          event.url === '/puntuacion' ||
+          event.url.startsWith('/puntuacion') ||
           event.url.startsWith('/personajes')||
           event.url.startsWith('/game');
         this.isProfesorPage =
