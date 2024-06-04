@@ -35,14 +35,14 @@ import { PuntuacionesService } from './puntuaciones/puntuaciones.service';
 import { SalasService } from './salas/salas.service';
 import { RespuestasService } from './respuestas/respuestas.service';
 
-
+//postgres://admin:itKxE2aNj2CDYiZawvp8tuElUovcSAYV@dpg-cpf7ii5ds78s7397fing-a.oregon-postgres.render.com/labmat
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: "postgres",
-    host: "localhost",
+    host: "dpg-cpf7ii5ds78s7397fing-a",
     port: 5432,
-    username: "postgres",
-    password: "1234qwer",
+    username: "admin",
+    password: "itKxE2aNj2CDYiZawvp8tuElUovcSAYV",
     database: "labmat",
     synchronize: true,
     logging: true,
