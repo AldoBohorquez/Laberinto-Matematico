@@ -52,7 +52,7 @@ export const routes: Routes = [
   {
     path:'puntuacion/:personaje/:score',
     component: PuntuacionComponent,
-    canActivate: [alumnosAuthGuard]
+    
   },
   {
     path:'bienvenida',

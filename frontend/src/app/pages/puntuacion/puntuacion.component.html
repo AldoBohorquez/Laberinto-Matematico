@@ -1,33 +1,20 @@
-<div class="container-fluid mainContainer p-5 ">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8 col-sm-10 col-12 cuadro">
-            <div class="card p-5 text-center">
-                <div>
-                    <table class="table mb-5">
-                        <thead>
-                            <tr>
-                                <th>Jugador</th>
-                                <th>Puntuación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jugador 1</td>
-                                <td>####</td>
-                            </tr>
-                            <tr>
-                                <td>Jugador 2</td>
-                                <td>####</td>
-                            </tr>
-                            <tr>
-                                <td>Jugador 3</td>
-                                <td>####</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btnContinue">Continuar</button>
-                </div>
-            </div>
+<div
+  class="container-fluid mainContainer p-5 d-flex align-items-center justify-content-center"
+>
+  <div class="row">
+    <div class="col cuadro p-4 d-flex flex-lg-row flex-md-row gap-3">
+      <div class="row">
+        <img [src]="'../../assets/images/' + personaje + '.png'" class="character">
+      </div>
+      <div class="row d-flex flex-column ">
+        <div class="col d-flex flex-column align-items-center justify-content-center">
+          <span class="score_text">Puntuación</span>
+          <span class="score">{{score}}/10</span>
         </div>
+        <div class="col mt-3 mt-lg-0 mt-md-0  d-flex justify-content-center align-items-center">
+          <button class="btn btnContinue">Continuar</button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
