@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 
-import { Alumno, AlumnosLogin, Grupo, Profesor } from '../interfaces/profesor.interface';
+import { Alumno, AlumnosLogin, CheckScore, Grupo, Profesor, Puntuacion } from '../interfaces/profesor.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -58,5 +58,17 @@ export class ApiService {
 
   updateAlumno(id_alumno:number, nombre:string) {
     return this._http.put(`https://laberintomatematicobackend.onrender.com/alumnos/${id_alumno}`, {nombre},{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  revisarPuntuacion(ch: CheckScore){
+    return this._http.post<Puntuacion>('https://laberintomatematicobackend.onrender.com/puntuaciones/alumnoNivel', ch,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  actualizarPuntuacion(puntuacion: Puntuacion){
+    return this._http.put(`https://laberintomatematicobackend.onrender.com/puntuaciones/${puntuacion.id}`, puntuacion,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  }
+
+  newPuntuacion(puntuacion: Puntuacion){
+    return this._http.post<Puntuacion>('https://laberintomatematicobackend.onrender.com/puntuaciones', puntuacion,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 }

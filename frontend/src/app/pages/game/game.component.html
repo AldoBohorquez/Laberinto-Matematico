@@ -33,7 +33,9 @@
           <div class="time_text">Tiempo restante</div>
           <div class="time_sec">{{ timer }}</div>
         </div>
-        <button class="next_btn" (click)="nextQuestion()">Siguiente</button>
+        <button class="next_btn" *ngIf="isOptionSelected" (click)="nextQuestion()">
+          {{ isLastQuestion() ? 'Finalizar' : 'Siguiente' }}
+        </button>
       </div>
     </div>
   </div>

@@ -32,6 +32,7 @@ export class VisualizacionGrupoComponent {
       this.miGrupo = resp;
       if (this.miGrupo && this.miGrupo.alumnos) {
         this.listaAlumnos = this.miGrupo.alumnos;
+        console.log(this.listaAlumnos);
       }
     })
   };

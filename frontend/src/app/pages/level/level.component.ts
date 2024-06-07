@@ -15,7 +15,7 @@ export class LevelComponent {
     this._activeRoute.params.subscribe(params => {
       const section=params['section'];
       // console.log(`${section}${level}`)
-      this._route.navigateByUrl(`personajes/${section}${level}`);
+      this._route.navigateByUrl(`personajes/${level}-${section}`);
     })
   }
 }

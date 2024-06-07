@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Alumno,
+  CheckScore,
+  Puntuacion,
+} from '../../interfaces/profesor.interface';
+import { AutenticacionAlumnoService } from '../../services/autenticacion-alumno.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-game',
@@ -12,8 +19,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class GameComponent implements OnInit {
   _activeRoute = inject(ActivatedRoute);
   personaje: string = '';
-  _router = inject (Router);
-
+  level: string = '';
+  _router = inject(Router);
+  alumnoLogueado: Alumno | null = null;
+  authService = inject(AutenticacionAlumnoService);
+  apiS = inject(ApiService);
 
   quiz = [
     {
@@ -55,12 +65,18 @@ export class GameComponent implements OnInit {
   constructor() {
     this._activeRoute.params.subscribe((params) => {
       this.personaje = params['personaje'];
+      this.level = params['nivel'];
+      console.log(this.level);
     });
   }
 
   ngOnInit(): void {
     this.currentQuestion = this.quiz[this.currentQuestionIndex];
     this.startTimer();
+
+    this.authService.getUser().subscribe((usuario) => {
+      this.alumnoLogueado = usuario;
+    });
   }
 
   startTimer(): void {
@@ -116,12 +132,64 @@ export class GameComponent implements OnInit {
       this.endQuiz(this.score);
     }
   }
+  endQuiz(puntos: number): void {
+    let alumnoId = 0;
+    if (this.alumnoLogueado) {
+      alumnoId = this.alumnoLogueado?.id;
+    }
+    const nivelNombre = this.level;
+    const revisar: CheckScore = { alumnoId, nivelNombre };
 
-  endQuiz(id: number): void {
-    this._activeRoute.params.subscribe(params => {
-      const personaje=params['personaje'];
-      // console.log(`${personaje}/${id}`)
-      this._router.navigateByUrl(`puntuacion/${personaje}/${id}`);
-    })
+    this.apiS.revisarPuntuacion(revisar).subscribe(
+      (response: Puntuacion) => {
+        const puntuacionExistente = response;
+        console.log('puntuacion existente');
+
+        puntuacionExistente.puntuacionObtenida = puntos;
+        this.apiS.actualizarPuntuacion(puntuacionExistente).subscribe(
+          () => {
+            console.log('Puntuación actualizada');
+          },
+          (error) => {
+            console.log('Error al actualizar la puntuación', error);
+          }
+        );
+      },
+      (error) => {
+        console.log('No existe');
+        let idAlumno = 0;
+        let idGrupo = 0;
+        if (this.alumnoLogueado) {
+          idAlumno = this.alumnoLogueado?.id;
+          idGrupo = this.alumnoLogueado?.grupos.id_grupo;
+        }
+        const nuevaPuntuacion: Puntuacion = {
+          puntuacionObtenida: puntos,
+          nivel: nivelNombre,
+          alumno_id: idAlumno,
+          grupo_id: idGrupo,
+        };
+        // console.log(nuevaPuntuacion);
+
+        this.apiS.newPuntuacion(nuevaPuntuacion).subscribe(
+          () => {
+            console.log('Puntuación creada');
+          },
+          (err) => {
+            console.log('Error al crear la puntuación', err);
+          }
+        );
+      }
+    );
+
+    // this._activeRoute.params.subscribe((params) => {
+    //   const personaje = params['personaje'];
+    //   // console.log(`${personaje}/${id}`)
+    //   this._router.navigateByUrl(`puntuacion/${personaje}/${id}`);
+    // });
+  }
+
+  isLastQuestion(): boolean {
+    return this.currentQuestionIndex === this.quiz.length - 1;
   }
 }

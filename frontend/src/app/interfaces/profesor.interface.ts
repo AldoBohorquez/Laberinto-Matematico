@@ -22,7 +22,7 @@ export interface Salas {
 export interface Alumno {
   id:           number;
   nombre:       string;
-  puntuaciones: any[];
+  puntuaciones: Puntuacion[];
   grupos:       Grupo;
 }
 
@@ -31,3 +31,15 @@ export interface AlumnosLogin {
   grupoId:number;
 }
 
+export interface Puntuacion {
+  id?:                 number;
+  puntuacionObtenida: number;
+  nivel:              string;
+  alumno_id:           number;
+  grupo_id:           number;
+}
+
+export interface CheckScore {
+  alumnoId: number;
+  nivelNombre: string;
+}
