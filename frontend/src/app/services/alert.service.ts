@@ -27,4 +27,16 @@ export class AlertService {
       confirmButtonText: 'Ok',
     })
   }
+
+  alertQuestion( message: string){
+    return Swal.fire({
+      icon: 'question',
+      text: message,
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#d33'
+    });
+
+  }
 }

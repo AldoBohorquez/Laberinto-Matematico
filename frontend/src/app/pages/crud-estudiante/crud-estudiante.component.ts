@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './crud-estudiante.component.html',
-  styleUrl: './crud-estudiante.component.css'
+  styleUrl: './crud-estudiante.component.css',
 })
 export class CrudEstudianteComponent {
   apiS = inject(ApiService);
   miGrupo: Grupo | null = null;
-  listaAlumnos:Alumno[] = [];
+  listaAlumnos: Alumno[] = [];
   nombreAlumno: string = '';
   alumnoId: number | null = null;
 
@@ -24,37 +24,46 @@ export class CrudEstudianteComponent {
   _router = inject(Router);
   sweet = inject(AlertService);
 
-  constructor(){
-    this._activeRoute.params.subscribe(params => {
+  constructor() {
+    this._activeRoute.params.subscribe((params) => {
       // console.log(params['id']);
       this.getGrupo(params['id']);
     });
   }
 
-
-  getGrupo(id: number){
+  getGrupo(id: number) {
     this.apiS.getGrupo(id).subscribe((resp: Grupo) => {
       console.log(resp);
       this.miGrupo = resp;
       if (this.miGrupo && this.miGrupo.alumnos) {
         this.listaAlumnos = this.miGrupo.alumnos;
       }
-    })
-  };
+    });
+  }
 
-  goToRegister(id: number){
+  goToRegister(id: number) {
     this._router.navigateByUrl(`registrarEstudiante/${id}`);
   }
 
   deleteAlumno(id: number) {
-    this.apiS.deleteAlumno(id).subscribe(() => {
-      this.listaAlumnos = this.listaAlumnos.filter(alum => alum.id !== id);
-      this.sweet.alert('Estudiante eliminado','error');
-    }, error => {
-      console.error('Error al eliminar el Estudiante:', error);
-    });
+    this.sweet
+      .alertQuestion('Estás a punto de eliminar este elemento. ¿Estás seguro?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.apiS.deleteAlumno(id).subscribe(
+            () => {
+              this.listaAlumnos = this.listaAlumnos.filter(
+                (alum) => alum.id !== id
+              );
+              this.sweet.alert('Estudiante eliminado', 'error');
+            },
+            (error) => {
+              console.error('Error al eliminar el Estudiante:', error);
+            }
+          );
+        }
+      });
   }
-
 
   openEditModal(id: number, nombre: string) {
     this.alumnoId = id;
@@ -64,10 +73,11 @@ export class CrudEstudianteComponent {
   guardarCambios() {
     if (this.alumnoId !== null) {
       this.apiS.updateAlumno(this.alumnoId, this.nombreAlumno).subscribe(
-
         (response) => {
-          console.log( response);
-          const estudiante = this.listaAlumnos.find(g => g.id === this.alumnoId);
+          console.log(response);
+          const estudiante = this.listaAlumnos.find(
+            (g) => g.id === this.alumnoId
+          );
           if (estudiante) {
             estudiante.nombre = this.nombreAlumno;
           }

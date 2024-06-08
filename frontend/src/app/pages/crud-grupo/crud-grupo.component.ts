@@ -40,17 +40,23 @@ export class CrudGrupoComponent implements OnInit {
   }
 
   deleteGroup(id: number) {
-    this.apiS.deleteGrupo(id).subscribe(
-      () => {
-        this.groupList = this.groupList.filter(
-          (group) => group.id_grupo !== id
-        );
-        this.sweet.alert('Grupo eliminado', 'error');
-      },
-      (error) => {
-        console.error('Error al eliminar el grupo:', error);
-      }
-    );
+    this.sweet
+      .alertQuestion('Estás a punto de eliminar este elemento. ¿Estás seguro?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.apiS.deleteGrupo(id).subscribe(
+            () => {
+              this.groupList = this.groupList.filter(
+                (group) => group.id_grupo !== id
+              );
+              this.sweet.alert('Grupo eliminado', 'error');
+            },
+            (error) => {
+              console.error('Error al eliminar el grupo:', error);
+            }
+          );
+        }
+      });
   }
 
   openEditModal(id: number, nombre: string) {
@@ -61,10 +67,9 @@ export class CrudGrupoComponent implements OnInit {
   guardarCambios() {
     if (this.grupoId !== null) {
       this.apiS.updateGrupo(this.grupoId, this.nombreGrupo).subscribe(
-
         (response) => {
           // Actualiza el grupo en la lista local
-          const grupo = this.groupList.find(g => g.id_grupo === this.grupoId);
+          const grupo = this.groupList.find((g) => g.id_grupo === this.grupoId);
           if (grupo) {
             grupo.nombre = this.nombreGrupo;
           }
@@ -77,6 +82,4 @@ export class CrudGrupoComponent implements OnInit {
       );
     }
   }
-
-
 }

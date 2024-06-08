@@ -32,8 +32,11 @@ export class HomeComponent {
     this.apiS.loginAlumno(alumnoLogin).subscribe(
       (response: Alumno) => {
         this.authService.login(response);
-        this.route.navigateByUrl('/section');
         console.log('Login exitoso', response);
+        
+
+        this.route.navigateByUrl('/section');
+
       },
       (error) => {
         console.error('Error en el login de alumno:', error);
