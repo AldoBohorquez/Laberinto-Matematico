@@ -8,14 +8,16 @@
         class="form-check form-switch"
         *ngIf="miGrupo?.salas?.active !== undefined"
       >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckChecked"
-          [checked]="miGrupo?.salas?.active"
-          (change)="onChangeSwitch($event)"
-        />
+      <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="flexSwitchCheckChecked"
+      [checked]="miGrupo?.salas?.active"
+      [disabled]="!switchEnabled"
+      (change)="onChangeSwitch($event)"
+    />
+
       </div>
     </div>
   </div>
@@ -78,7 +80,7 @@
       <tbody>
         <tr>
           <td class="azul text-center">Estudiante</td>
-          <td class="azul text-center ">Facil</td>
+          <td class="azul text-center">Facil</td>
           <td class="azul text-center">Normal</td>
           <td class="azul text-center">Dificil</td>
           <td class="azul text-center">Facil</td>
@@ -88,17 +90,17 @@
           <td class="azul text-center">Normal</td>
           <td class="azul text-center">Dificil</td>
         </tr>
-        <tr *ngFor="let item of listaAlumnos; let i = index" >
+        <tr *ngFor="let item of listaAlumnos; let i = index">
           <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ item.nombre }}</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">8/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">6/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
-          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">7/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Facil-Suma') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Medio-Suma') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Dificil-Suma') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Facil-Resta') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Medio-Resta') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Dificil-Resta') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Facil-Multiplicacion') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Medio-Multiplicacion') }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ getPuntuacion(item, 'Dificil-Multiplicacion') }}</td>
         </tr>
       </tbody>
     </table>

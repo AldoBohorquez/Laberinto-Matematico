@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 
-import { Alumno, AlumnosLogin, CheckScore, Ejercicio, Grupo, Profesor, Puntuacion } from '../interfaces/profesor.interface';
+import { Alumno, AlumnosLogin, CheckScore, Ejercicio, Grupo, Profesor, Puntuacion, Salas } from '../interfaces/profesor.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -76,7 +76,7 @@ export class ApiService {
     return this._http.get<Ejercicio[]>(`https://laberintomatematicobackend.onrender.com/ejercicios/nivelName/${nombre}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 
-  getPuntuacionPorAlumno(idAlumno: number) {
-    return this._http.get<Puntuacion[]>(`https://laberintomatematicobackend.onrender.com/puntuaciones/alumno/${idAlumno}`,{ headers: { 'Access-Control-Allow-Origin': '*' } });
+  changeModeGroup(sala: Salas){
+    return this._http.put(`https://laberintomatematicobackend.onrender.com/salas/activar`, sala,{ headers: { 'Access-Control-Allow-Origin': '*' } });
   }
 }

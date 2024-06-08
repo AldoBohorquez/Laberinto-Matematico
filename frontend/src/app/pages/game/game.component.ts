@@ -110,7 +110,6 @@ export class GameComponent implements OnInit {
   }
 
   nextQuestion(): void {
-    console.log('puntuacion: ' + this.score);
     this.currentQuestionIndex++;
     if (this.currentQuestionIndex < this.quiz.length) {
       this.currentQuestion = this.quiz[this.currentQuestionIndex];
@@ -126,9 +125,12 @@ export class GameComponent implements OnInit {
 
   endQuiz(puntos: number): void {
     let alumnoId = 0;
+    let idGrupo = 0;
     if (this.alumnoLogueado) {
       alumnoId = this.alumnoLogueado?.id;
+      idGrupo = this.alumnoLogueado?.grupos.id_grupo;
     }
+    console.log(alumnoId);
     const nivelNombre = this.level;
     const revisar: CheckScore = { alumnoId, nivelNombre };
 
@@ -149,18 +151,15 @@ export class GameComponent implements OnInit {
       },
       (error) => {
         console.log('No existe');
-        let idAlumno = 0;
-        let idGrupo = 0;
-        if (this.alumnoLogueado) {
-          idAlumno = this.alumnoLogueado?.id;
-          idGrupo = this.alumnoLogueado?.grupos.id_grupo;
-        }
+
         const nuevaPuntuacion: Puntuacion = {
           puntuacionObtenida: puntos,
           nivel: nivelNombre,
-          alumno_id: idAlumno,
+          alumno_id: alumnoId,
           grupo_id: idGrupo,
         };
+
+        console.log(nuevaPuntuacion);
 
         this.apiS.newPuntuacion(nuevaPuntuacion).subscribe(
           () => {

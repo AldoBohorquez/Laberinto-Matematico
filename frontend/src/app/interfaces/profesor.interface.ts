@@ -17,7 +17,7 @@ export interface Grupo {
 export interface Salas {
   id:            number;
   active:        boolean;
-  gruposId:      number;
+  gruposId?:      number;
 }
 
 export interface Alumno {
