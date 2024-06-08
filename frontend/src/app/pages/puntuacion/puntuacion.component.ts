@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-puntuacion',
@@ -12,6 +12,7 @@ export class PuntuacionComponent {
   _activeRoute = inject(ActivatedRoute);
   personaje: string = '';
   score: number = 0;
+  route = inject(Router)
 
 
   constructor() {
@@ -19,5 +20,9 @@ export class PuntuacionComponent {
       this.personaje = params['personaje'];
       this.score = parseInt(params['score']);
     });
+  }
+
+  goToStart(){
+    this.route.navigateByUrl('section');
   }
 }

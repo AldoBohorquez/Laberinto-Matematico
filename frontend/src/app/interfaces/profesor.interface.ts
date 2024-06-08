@@ -1,3 +1,4 @@
+
 export interface Profesor {
   id: number;
   nombreCompleto: string;
@@ -42,4 +43,22 @@ export interface Puntuacion {
 export interface CheckScore {
   alumnoId: number;
   nivelNombre: string;
+}
+
+export interface Ejercicio {
+  id:        number;
+  ejercicio: string;
+  niveles:   Nivel;
+  respuestas: Respuesta[];
+}
+
+export interface Nivel {
+  id_niveles: number;
+  name:       string;
+}
+
+export interface Respuesta {
+  id:         number;
+  respuestas: string;
+  valor:      boolean;
 }

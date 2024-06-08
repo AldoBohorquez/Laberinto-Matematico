@@ -77,28 +77,28 @@
       </thead>
       <tbody>
         <tr>
-          <td class="azul">Estudiante</td>
-          <td class="azul">Facil</td>
-          <td class="azul">Normal</td>
-          <td class="azul">Dificil</td>
-          <td class="azul">Facil</td>
-          <td class="azul">Normal</td>
-          <td class="azul">Dificil</td>
-          <td class="azul">Facil</td>
-          <td class="azul">Normal</td>
-          <td class="azul">Dificil</td>
+          <td class="azul text-center">Estudiante</td>
+          <td class="azul text-center ">Facil</td>
+          <td class="azul text-center">Normal</td>
+          <td class="azul text-center">Dificil</td>
+          <td class="azul text-center">Facil</td>
+          <td class="azul text-center">Normal</td>
+          <td class="azul text-center">Dificil</td>
+          <td class="azul text-center">Facil</td>
+          <td class="azul text-center">Normal</td>
+          <td class="azul text-center">Dificil</td>
         </tr>
-        <tr *ngFor="let item of listaAlumnos; let i = index">
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ item.nombre }}</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">8/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">6/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
-          <td [ngClass]="{ azulClaro: i % 2 !== 0 }">7/10</td>
+        <tr *ngFor="let item of listaAlumnos; let i = index" >
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">{{ item.nombre }}</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">8/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">6/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">9/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">10/10</td>
+          <td class="text-center" [ngClass]="{ azulClaro: i % 2 !== 0 }">7/10</td>
         </tr>
       </tbody>
     </table>

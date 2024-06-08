@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   Alumno,
   CheckScore,
+  Ejercicio,
   Puntuacion,
+  Respuesta,
 } from '../../interfaces/profesor.interface';
 import { AutenticacionAlumnoService } from '../../services/autenticacion-alumno.service';
 import { ApiService } from '../../services/api.service';
@@ -24,33 +26,7 @@ export class GameComponent implements OnInit {
   alumnoLogueado: Alumno | null = null;
   authService = inject(AutenticacionAlumnoService);
   apiS = inject(ApiService);
-
-  quiz = [
-    {
-      pregunta: '¿Cuál es el resultado de 2 + 2?',
-      respuestas: [
-        { respuesta: '4', correcta: true },
-        { respuesta: '5', correcta: false },
-        { respuesta: '6', correcta: false },
-      ],
-    },
-    {
-      pregunta: '¿Cuál es el resultado de 4 + 4?',
-      respuestas: [
-        { respuesta: '4', correcta: false },
-        { respuesta: '8', correcta: true },
-        { respuesta: '6', correcta: false },
-      ],
-    },
-    {
-      pregunta: '¿Cuál es el resultado de 3 + 2?',
-      respuestas: [
-        { respuesta: '4', correcta: false },
-        { respuesta: '6', correcta: false },
-        { respuesta: '5', correcta: true },
-      ],
-    },
-  ];
+  quiz: any[] = [];
 
   currentQuestionIndex: number = 0;
   currentQuestion: any;
@@ -68,15 +44,29 @@ export class GameComponent implements OnInit {
       this.level = params['nivel'];
       console.log(this.level);
     });
+
+    this.apiS.getEjerciciosPorNivel(this.level).subscribe((data) => {
+      this.quiz = this.mapQuizData(data);
+      this.currentQuestion = this.quiz[this.currentQuestionIndex];
+      // console.log(this.quiz);
+    });
   }
 
   ngOnInit(): void {
-    this.currentQuestion = this.quiz[this.currentQuestionIndex];
-    this.startTimer();
-
     this.authService.getUser().subscribe((usuario) => {
       this.alumnoLogueado = usuario;
     });
+    this.startTimer();
+  }
+
+  mapQuizData(data: any[]): any[] {
+    return data.map((ejercicio) => ({
+      pregunta: ejercicio.ejercicio,
+      respuestas: ejercicio.respuesta.map((res: Respuesta) => ({
+        respuesta: res.respuestas,
+        correcta: res.valor,
+      })),
+    }));
   }
 
   startTimer(): void {
@@ -120,6 +110,7 @@ export class GameComponent implements OnInit {
   }
 
   nextQuestion(): void {
+    console.log('puntuacion: ' + this.score);
     this.currentQuestionIndex++;
     if (this.currentQuestionIndex < this.quiz.length) {
       this.currentQuestion = this.quiz[this.currentQuestionIndex];
@@ -132,6 +123,7 @@ export class GameComponent implements OnInit {
       this.endQuiz(this.score);
     }
   }
+
   endQuiz(puntos: number): void {
     let alumnoId = 0;
     if (this.alumnoLogueado) {
@@ -169,7 +161,6 @@ export class GameComponent implements OnInit {
           alumno_id: idAlumno,
           grupo_id: idGrupo,
         };
-        // console.log(nuevaPuntuacion);
 
         this.apiS.newPuntuacion(nuevaPuntuacion).subscribe(
           () => {
@@ -182,11 +173,10 @@ export class GameComponent implements OnInit {
       }
     );
 
-    // this._activeRoute.params.subscribe((params) => {
-    //   const personaje = params['personaje'];
-    //   // console.log(`${personaje}/${id}`)
-    //   this._router.navigateByUrl(`puntuacion/${personaje}/${id}`);
-    // });
+    this._activeRoute.params.subscribe((params) => {
+      const personaje = params['personaje'];
+      this._router.navigateByUrl(`puntuacion/${personaje}/${puntos}`);
+    });
   }
 
   isLastQuestion(): boolean {

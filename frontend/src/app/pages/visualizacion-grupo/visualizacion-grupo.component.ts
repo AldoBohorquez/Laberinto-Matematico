@@ -17,13 +17,15 @@ export class VisualizacionGrupoComponent {
   miGrupo: Grupo | null = null;
   listaAlumnos:Alumno[] = [];
   _activeRoute = inject(ActivatedRoute);
-  _router = inject(Router)
+  _router = inject(Router);
 
   constructor(){
     this._activeRoute.params.subscribe(params => {
       // console.log(params['id']);
       this.getGrupo(params['id']);
     });
+
+
   }
 
   getGrupo(id: number){
@@ -33,6 +35,7 @@ export class VisualizacionGrupoComponent {
       if (this.miGrupo && this.miGrupo.alumnos) {
         this.listaAlumnos = this.miGrupo.alumnos;
         console.log(this.listaAlumnos);
+
       }
     })
   };
