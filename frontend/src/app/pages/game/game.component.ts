@@ -125,10 +125,10 @@ export class GameComponent implements OnInit {
 
   endQuiz(puntos: number): void {
     let alumnoId = 0;
-    let idGrupo = 0;
+    let grupoId = 0;
     if (this.alumnoLogueado) {
       alumnoId = this.alumnoLogueado?.id;
-      idGrupo = this.alumnoLogueado?.grupos.id_grupo;
+      grupoId = this.alumnoLogueado.grupos.id_grupo;
     }
     console.log(alumnoId);
     const nivelNombre = this.level;
@@ -154,9 +154,9 @@ export class GameComponent implements OnInit {
 
         const nuevaPuntuacion: Puntuacion = {
           puntuacionObtenida: puntos,
-          nivel: nivelNombre,
-          alumno_id: alumnoId,
-          grupo_id: idGrupo,
+          grupoId: grupoId ,
+          alumnosId: alumnoId,
+          nivel: nivelNombre
         };
 
         console.log(nuevaPuntuacion);

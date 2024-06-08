@@ -1,4 +1,3 @@
-
 export interface Profesor {
   id: number;
   nombreCompleto: string;
@@ -15,30 +14,31 @@ export interface Grupo {
 }
 
 export interface Salas {
-  id:            number;
-  active:        boolean;
-  gruposId?:      number;
+  id: number;
+  active: boolean;
+  gruposId?: number;
 }
 
 export interface Alumno {
-  id:           number;
-  nombre:       string;
+  id: number;
+  nombre: string;
   puntuaciones: Puntuacion[];
-  grupos:       Grupo;
+  grupos: Grupo;
 }
 
 export interface AlumnosLogin {
-  estudianteId:number;
-  grupoId:number;
+  estudianteId: number;
+  grupoId: number;
 }
 
 export interface Puntuacion {
-  id?:                 number;
+  id?: number;
   puntuacionObtenida: number;
-  nivel:              string;
-  alumno_id:           number;
-  grupo_id:           number;
+  grupoId: number;
+  alumnosId: number;
+  nivel: string;
 }
+
 
 export interface CheckScore {
   alumnoId: number;
@@ -46,19 +46,19 @@ export interface CheckScore {
 }
 
 export interface Ejercicio {
-  id:        number;
+  id: number;
   ejercicio: string;
-  niveles:   Nivel;
+  niveles: Nivel;
   respuestas: Respuesta[];
 }
 
 export interface Nivel {
   id_niveles: number;
-  name:       string;
+  name: string;
 }
 
 export interface Respuesta {
-  id:         number;
+  id: number;
   respuestas: string;
-  valor:      boolean;
+  valor: boolean;
 }
