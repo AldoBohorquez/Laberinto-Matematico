@@ -19,6 +19,16 @@ export class AlertService {
     })
   }
 
+  alertCenter(msn:string){
+    Swal.fire({
+      text: msn,
+      icon: 'warning',
+      position: 'center',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   alertOk(msn:string){
     Swal.fire({
       text: msn,

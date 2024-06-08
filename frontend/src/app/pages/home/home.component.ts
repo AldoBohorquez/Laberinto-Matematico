@@ -31,12 +31,14 @@ export class HomeComponent {
 
     this.apiS.loginAlumno(alumnoLogin).subscribe(
       (response: Alumno) => {
-        this.authService.login(response);
-        console.log('Login exitoso', response);
-        
+        console.log('Alumno y grupo existente', response);
 
-        this.route.navigateByUrl('/section');
-
+        if (response.grupos.salas?.active === true) {
+          this.authService.login(response);
+          this.route.navigateByUrl('/section');
+        } else{
+          this.sweet.alertCenter('El grupo no esta activo');
+        }
       },
       (error) => {
         console.error('Error en el login de alumno:', error);
